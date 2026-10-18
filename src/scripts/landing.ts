@@ -95,6 +95,18 @@ if (tablist) {
   });
 }
 
+/* ---- Recorrido del problema por perfil --------------------------------- */
+
+const botonesRecorrido = [...document.querySelectorAll<HTMLButtonElement>("[data-recorrido-boton]")];
+botonesRecorrido.forEach((b) => {
+  b.addEventListener("click", () => {
+    botonesRecorrido.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    document.querySelectorAll<HTMLElement>("[data-recorrido]").forEach((r) => {
+      r.hidden = r.dataset.recorrido !== b.dataset.recorridoBoton;
+    });
+  });
+});
+
 /* ---- Aparición al hacer scroll ------------------------------------------ */
 
 // Cada elemento aparece una sola vez. Al aparecer uno, también se dan por

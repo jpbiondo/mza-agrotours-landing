@@ -19,66 +19,57 @@ export const nav = [
   { id: "equipo", label: t("Equipo", "Team") },
 ];
 
-export const comparacion = [
+/**
+ * El problema contado por perfil: cómo se resuelve hoy (mensajes sueltos) y
+ * cómo con la plataforma (pasos). Los mensajes son ejemplos verosímiles, no
+ * citas reales. `perfil` define el color (ver Proyecto.astro).
+ */
+export const recorridos: {
+  perfil: "visitante" | "productor";
+  nombre: Txt;
+  hoy: Txt;
+  /** `respuesta`: mensaje del otro lado (se alinea a la derecha). `alerta`: cómo termina mal. */
+  mensajes: { canal: Txt; texto: Txt; respuesta?: boolean; alerta?: boolean }[];
+  con: Txt;
+  pasos: { titulo: Txt; desc: Txt; via: Txt }[];
+}[] = [
   {
-    hoy: t(
-      "Las experiencias están dispersas en redes y boca en boca; no hay un lugar donde ver qué ofrece cada finca.",
-      "Experiences are scattered across social media and word of mouth; there’s no single place to see what each farm offers.",
-    ),
-    nosotros: t(
-      "Catálogo único de actividades con filtros por tipo, zona y fecha, y un mapa de establecimientos.",
-      "One activity catalog with filters by type, area and date, plus a map of farms.",
-    ),
+    perfil: "visitante",
+    nombre: t("Visitante", "Visitor"),
+    hoy: t("Querés hacer una cosecha con tu familia el sábado.", "You want to join a harvest with your family on Saturday."),
+    mensajes: [
+      { canal: t("Instagram", "Instagram"), texto: t("Vi el post de una finca en Luján. ¿Hacen visitas?", "Saw a post from a farm in Luján. Do you take visitors?") },
+      { canal: t("WhatsApp · 2 días después", "WhatsApp · 2 days later"), texto: t("Sí, escribinos al WhatsApp", "Yes, text us on WhatsApp"), respuesta: true },
+      { canal: t("WhatsApp", "WhatsApp"), texto: t("¿Tienen lugar el sábado para 2 adultos y 2 chicos? ¿Cuánto sale?", "Any room on Saturday for 2 adults and 2 kids? How much is it?") },
+      { canal: t("WhatsApp", "WhatsApp"), texto: t("Te paso el CBU, mandame el comprobante", "Here are the bank details, send me the receipt"), respuesta: true },
+      { canal: t("Sábado, 9:40", "Saturday, 9:40"), texto: t("¿Dónde queda exactamente? Y si llueve, ¿se suspende?", "Where exactly is it? And if it rains, is it called off?"), alerta: true },
+    ],
+    con: t("Lo mismo, en un solo lugar y sin esperar respuesta.", "The same, in one place and without waiting for a reply."),
+    pasos: [
+      { titulo: t("Encontrás la actividad", "Find the activity"), desc: t("Filtrás por tipo, zona y fecha.", "Filter by type, area and date."), via: t("Catálogo y mapa", "Catalog and map") },
+      { titulo: t("Ves cupos y precio al instante", "See availability and price instantly"), desc: t("Tarifas por rango de edad y cupos por fecha.", "Age-based rates and per-date capacity."), via: t("Reserva online", "Online booking") },
+      { titulo: t("Pagás", "Pay"), desc: t("La reserva se confirma sola cuando entra el pago.", "The booking confirms itself once the payment goes through."), via: t("Mercado Pago", "Mercado Pago") },
+      { titulo: t("Llegás preparado", "Arrive prepared"), desc: t("Confirmación por correo, ubicación y pronóstico del día.", "Email confirmation, location and the day’s forecast."), via: t("Correo, mapa y clima", "Email, map and weather") },
+    ],
   },
   {
-    hoy: t(
-      "Las reservas se coordinan por mensaje, sin control de cupos y con riesgo de sobreventa.",
-      "Bookings are arranged by message, with no capacity control and a risk of overbooking.",
-    ),
-    nosotros: t(
-      "Reserva online con cupos por fecha y tarifas por rango etario, validadas en el momento.",
-      "Online booking with per-date capacity and age-based rates, validated instantly.",
-    ),
-  },
-  {
-    hoy: t(
-      "El cobro se arregla en el lugar o por transferencia, sin política de cancelación clara.",
-      "Payment is settled on site or by transfer, with no clear cancellation policy.",
-    ),
-    nosotros: t(
-      "Pago integrado, reprogramaciones, cancelaciones y reembolsos con reglas definidas.",
-      "Integrated payments, rescheduling, cancellations and refunds with defined rules.",
-    ),
-  },
-  {
-    hoy: t(
-      "La oferta no acompaña la temporada: se publica una cosecha cuando el cultivo todavía no está listo.",
-      "Offers don’t follow the season: a harvest gets published before the crop is ready.",
-    ),
-    nosotros: t(
-      "Gestión de cultivos y calendario de actividad para ofrecer cada experiencia en su momento.",
-      "Crop management and an activity calendar so each experience is offered at the right time.",
-    ),
-  },
-  {
-    hoy: t(
-      "Las consultas se pierden entre chats personales y nadie registra los problemas.",
-      "Questions get lost in personal chats and nobody keeps track of problems.",
-    ),
-    nosotros: t(
-      "Chat entre visitante y establecimiento, asistente virtual e incidencias con seguimiento.",
-      "Visitor–farm chat, a virtual assistant and tracked issues.",
-    ),
-  },
-  {
-    hoy: t(
-      "No hay forma de saber qué actividades funcionan ni cuánto generan.",
-      "There’s no way to know which activities work or how much they earn.",
-    ),
-    nosotros: t(
-      "Estadísticas de ocupación, ingresos y valoraciones por actividad.",
-      "Statistics on occupancy, revenue and ratings per activity.",
-    ),
+    perfil: "productor",
+    nombre: t("Productor", "Producer"),
+    hoy: t("Abrís la finca a visitas los fines de semana de cosecha.", "You open the farm to visitors on harvest weekends."),
+    mensajes: [
+      { canal: t("Instagram · 23:10", "Instagram · 23:10"), texto: t("Hola! ¿Hay lugar este finde?", "Hi! Any room this weekend?") },
+      { canal: t("Cuaderno", "Notebook"), texto: t("Sáb: Gómez ×4, Ruiz ×2, ¿Paula? ×3", "Sat: Gómez ×4, Ruiz ×2, Paula? ×3"), respuesta: true },
+      { canal: t("WhatsApp", "WhatsApp"), texto: t("Ya transferí, ¿me confirmás?", "I’ve sent the transfer, can you confirm?") },
+      { canal: t("Llamadas perdidas", "Missed calls"), texto: t("3 llamadas mientras estabas en la viña", "3 calls while you were out in the vineyard"), respuesta: true },
+      { canal: t("Sábado, 10:00", "Saturday, 10:00"), texto: t("Llegaron 14 personas para un cupo de 12", "14 people showed up for 12 spots"), alerta: true },
+    ],
+    con: t("Las reservas llegan ordenadas y ya pagas.", "Bookings arrive organized and already paid."),
+    pasos: [
+      { titulo: t("Publicás la actividad", "Publish the activity"), desc: t("Fotos, duración, qué incluye y tarifas por edad.", "Photos, duration, what’s included and age-based rates."), via: t("Panel del establecimiento", "Farm dashboard") },
+      { titulo: t("Definís cupos por fecha", "Set capacity per date"), desc: t("No se venden más lugares de los que hay.", "No more spots are sold than there are."), via: t("Calendario de actividad", "Activity calendar") },
+      { titulo: t("Cobrás", "Get paid"), desc: t("Con tu cuenta de Mercado Pago vinculada.", "Through your linked Mercado Pago account."), via: t("Mercado Pago", "Mercado Pago") },
+      { titulo: t("Respondés en un solo lugar", "Answer in one place"), desc: t("Chat por actividad, sin repartir mensajes entre apps.", "Chat per activity, no messages scattered across apps."), via: t("Chats", "Chats") },
+    ],
   },
 ];
 
@@ -213,7 +204,7 @@ export const alcance = [
   },
   {
     perfil: t("Productores", "Producers"),
-    tono: "warning",
+    tono: "brown",
     icono: "tractor",
     items: [
       [t("Alta de establecimiento", "Farm registration"), t("Solicitud de alta e invitación de otros gestores.", "Registration request and inviting other managers.")],

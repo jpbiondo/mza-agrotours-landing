@@ -1,7 +1,8 @@
 ---
 // Pill de estado del design system: punto de color + texto, sobre un relleno suave.
+// `brown` es el color del productor (ver Proyecto.astro).
 interface Props {
-  tone?: "success" | "warning" | "info" | "neutral";
+  tone?: "success" | "warning" | "info" | "brown" | "neutral";
   class?: string;
 }
 
@@ -11,6 +12,7 @@ const tones = {
   success: "bg-success-fill text-success-fg",
   warning: "bg-warning-fill text-warning-fg",
   info: "bg-info-fill text-info-fg",
+  brown: "bg-brown-100 text-brown-800",
   neutral: "bg-cream-tert text-fg-2",
 };
 ---
