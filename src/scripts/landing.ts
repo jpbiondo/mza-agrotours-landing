@@ -102,17 +102,29 @@ document.querySelectorAll<HTMLElement>(`[data-seasons] [data-month="${mes}"]`).f
 
 /* ---- Aparición al hacer scroll ------------------------------------------ */
 
+// Cada elemento aparece una sola vez. Al aparecer uno, también se dan por
+// vistos todos los que quedaron por encima: si se entra a mitad de página
+// (link a una sección, recarga con scroll guardado), al subir el contenido ya
+// está cargado en vez de animarse de nuevo.
+const pendientes = new Set(document.querySelectorAll<HTMLElement>(".reveal"));
+
+function revelar(el: HTMLElement) {
+  el.dataset.in = "";
+  pendientes.delete(el);
+  aparicion.unobserve(el);
+}
+
 const aparicion = new IntersectionObserver(
-  (entradas) =>
-    entradas.forEach((e) => {
-      if (e.isIntersecting) {
-        (e.target as HTMLElement).dataset.in = "";
-        aparicion.unobserve(e.target);
-      }
-    }),
+  (entradas) => {
+    if (!entradas.some((e) => e.isIntersecting)) return;
+    entradas.forEach((e) => e.isIntersecting && revelar(e.target as HTMLElement));
+    pendientes.forEach((el) => {
+      if (el.getBoundingClientRect().top < innerHeight) revelar(el);
+    });
+  },
   { threshold: 0.1 },
 );
-document.querySelectorAll(".reveal").forEach((el) => aparicion.observe(el));
+pendientes.forEach((el) => aparicion.observe(el));
 
 /* ---- Link activo de la navbar ------------------------------------------ */
 
