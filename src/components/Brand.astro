@@ -1,7 +1,9 @@
 ---
 // Logo + nombre. El logo es el mismo que usa la app en su header.
-// `dark`: sobre verde oscuro el logo casi no se ve (la montaña es green-800),
-// así que va sobre una placa crema y el nombre pasa a tonos claros.
+// `dark`: versión para fondo verde oscuro. El logo se dibuja acá con las mismas
+// formas que public/logo-pano.svg, pero la montaña grande (green-800) y los
+// surcos (brown-700) pasan a tonos claros; el sol y la montaña chica ya
+// contrastan y quedan igual.
 interface Props {
   dark?: boolean;
 }
@@ -9,10 +11,23 @@ interface Props {
 const { dark = false } = Astro.props;
 ---
 
-<a href="#top" class="flex shrink-0 items-center gap-[11px] no-underline" aria-label="Mendoza AgroTours, ir al inicio">
-  <span class:list={[dark && "rounded-md bg-cream-bg px-1.5 py-1"]}>
-    <img src="/logo-pano.svg" width="45" height="30" alt="" class="block" />
-  </span>
+<a href="#top" class="flex shrink-0 items-center gap-2.75 no-underline" aria-label="Mendoza AgroTours, ir al inicio">
+  {
+    dark ? (
+      <svg width="45" height="30" viewBox="0 0 96 64" fill="none" aria-hidden="true" class="block">
+        <circle cx="46" cy="18" r="8.5" class="fill-warning" />
+        <path d="M2 42 L20 24 L38 42 Z" class="fill-green-300" />
+        <path d="M58 6 L88 42 H28 Z" class="fill-cream-bg" />
+        <g class="stroke-brown-200" stroke-width="3" stroke-linecap="round">
+          <path d="M10 47 Q48 42.5 86 47" />
+          <path d="M5 53 Q48 48 91 53" />
+          <path d="M2 59.5 Q48 54 94 59.5" />
+        </g>
+      </svg>
+    ) : (
+      <img src="/logo-pano.svg" width="45" height="30" alt="" />
+    )
+  }
   <span class="leading-none">
     <span class:list={["block font-display text-lg font-bold", dark ? "text-white" : "text-green-800"]}>Mendoza</span>
     <span class:list={["mt-0.5 block text-[10px] font-semibold uppercase tracking-[.12em]", dark ? "text-brown-200" : "text-brown-700"]}>
