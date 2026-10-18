@@ -11,7 +11,7 @@ export interface Txt {
 const t = (es: string, en: string): Txt => ({ es, en });
 
 export const nav = [
-  { id: "proyecto", label: t("El proyecto", "Project") },
+  { id: "problema", label: t("Problema", "Problem") },
   { id: "modulos", label: t("Módulos", "Modules") },
   { id: "como-funciona", label: t("Cómo funciona", "How it works") },
   { id: "alcance", label: t("Alcance", "Scope") },
