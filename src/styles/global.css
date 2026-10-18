@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   MENDOZA AGROTOURS — Design Tokens
+   ----------------------------------------------------------------------------
+   Copiados de mza-agrotours-frontend (src/app/globals.css). @theme define los
+   tokens Y genera las utilidades de Tailwind (bg-green-800, text-fg-1,
+   rounded-pill, shadow-pop, font-display…). Si cambian en la app, se copian a
+   mano: no hay dependencia entre repos.
+   ============================================================================ */
+
+@theme {
+  /* Las fuentes las sirve Fontsource (importadas en Layout.astro). */
+  --font-display: "Bitter Variable", "Bitter", Georgia, serif;
+  --font-sans:    "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Primary — Verde */
+  --color-green-900: #0E2E0C;
+  --color-green-800: #154212;
+  --color-green-700: #1E5418;
+  --color-green-600: #2D5A27;
+  --color-green-300: #7FA876;
+  --color-green-100: #E4EDDF;
+  --color-green-050: #F1F6EE;
+
+  /* Secondary — Marrón */
+  --color-brown-800: #5C3B22;
+  --color-brown-700: #805533;
+  --color-brown-500: #A6794F;
+  --color-brown-200: #E0CBB4;
+  --color-brown-100: #F0E6D9;
+
+  /* Neutrals */
+  --color-cream-bg:        #FBF9F8;
+  --color-surface:         #FFFFFF;
+  --color-cream-tert:      #F5F1EA;
+  --color-sand:            #C9BFA8;
+  --color-outline-variant: #D9D2C2;
+  --color-outline:         #B8AE99;
+
+  /* Text */
+  --color-fg-1: #2A2620;
+  --color-fg-2: #5C564E;
+  --color-fg-3: #8A8278;
+  --color-fg-on-dark: #F7F5F1;
+
+  /* Semantic */
+  --color-success: #2D7A33;  --color-success-fill: #E4EDDF;  --color-success-fg: #14470F;
+  --color-warning: #C77F2A;  --color-warning-fill: #F8ECD7;  --color-warning-fg: #6E4410;
+  --color-danger:  #B23A2E;  --color-danger-fill:  #F6E0DC;  --color-danger-fg:  #6E1F18;
+
+  /* Radii — rounded-sm / rounded-md / rounded-lg / rounded-pill */
+  --radius-sm:   0.375rem;
+  --radius-md:   0.5rem;
+  --radius-lg:   1rem;
+  --radius-pill: 9999px;
+
+  /* Elevation — shadow-hover / shadow-pop / shadow-tactile-* */
+  --shadow-hover: 0px 4px 12px rgba(45, 90, 39, 0.08);
+  --shadow-pop:   0px 8px 24px rgba(45, 90, 39, 0.12);
+  --shadow-tactile-primary: inset 0 -2px 0 var(--color-green-900);
+  --shadow-tactile-neutral: inset 0 -2px 0 var(--color-outline);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream-bg font-sans text-fg-1 antialiased;
+  }
+}
