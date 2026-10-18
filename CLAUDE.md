@@ -18,6 +18,8 @@ La app completa (Next.js + Firebase + backend Spring) vive en el repo hermano `.
   directo acá, no en Claude Design.
 - Color por perfil, en toda la página: visitante verde (`green-800`), productor marrón (`brown-700`),
   administración azul (`info`). El ocre (`warning`) es el acento cálido.
+- Fondos: las secciones alternan crema (el fondo de la página) y arena (`bg-brown-100`), en orden.
+  El verde oscuro (`green-900`) queda solo para el footer.
 - Tiene que ser responsive (mobile first).
 - Si el diseño tiene bugs de UI evidentes (p. ej. un botón verde relleno cuyo texto se vuelve verde en hover), se corrigen.
 

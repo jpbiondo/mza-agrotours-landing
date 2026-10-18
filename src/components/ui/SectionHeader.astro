@@ -7,19 +7,17 @@ interface Props {
   label: Txt;
   title: Txt;
   intro?: Txt;
-  /** Para secciones sobre fondo verde oscuro. */
-  dark?: boolean;
 }
 
-const { label, title, intro, dark = false } = Astro.props;
+const { label, title, intro } = Astro.props;
 ---
 
 <div class="reveal">
-  <T t={label} class:list={["mb-3 block text-xs font-semibold uppercase tracking-[.12em]", dark ? "text-brown-200" : "text-brown-700"]} />
-  <h2 class:list={["text-[2rem] font-bold leading-[1.15] sm:text-display", dark && "text-white"]}><T t={title} /></h2>
+  <T t={label} class="mb-3 block text-xs font-semibold uppercase tracking-[.12em] text-brown-700" />
+  <h2 class="text-[2rem] font-bold leading-[1.15] sm:text-display"><T t={title} /></h2>
   {
     intro && (
-      <p class:list={["mt-4 max-w-160 text-body-lg leading-relaxed", dark ? "text-green-100/80" : "text-fg-2"]}>
+      <p class="mt-4 max-w-160 text-body-lg leading-relaxed text-fg-2">
         <T t={intro} />
       </p>
     )

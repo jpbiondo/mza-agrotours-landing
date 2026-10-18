@@ -5,11 +5,10 @@ import SectionHeader from "../ui/SectionHeader.astro";
 import T from "../ui/T.astro";
 ---
 
-<!-- Única sección en verde oscuro (además del footer): corta el alternado arena/crema. -->
-<section id="como-funciona" class="bg-green-900 py-20 sm:py-28" data-screen-label="Cómo funciona">
+<!-- Banda arena, como las demás secciones pares. -->
+<section id="como-funciona" class="bg-brown-100 py-20 sm:py-28" data-screen-label="Cómo funciona">
   <div class="mx-auto max-w-300 px-5 sm:px-7">
     <SectionHeader
-      dark
       label={{ es: "Cómo funciona", en: "How it works" }}
       title={{ es: "De la búsqueda a la finca, en cuatro pasos", en: "From search to farm, in four steps" }}
       intro={{ es: "El recorrido del visitante, pantalla por pantalla.", en: "The visitor’s journey, screen by screen." }}
@@ -20,13 +19,13 @@ import T from "../ui/T.astro";
         comoFunciona.map(({ titulo, desc, pantalla, captura }, i) => (
           <li class="reveal flex min-w-0 flex-col gap-3.5">
             <BrowserFrame label={pantalla} shot={captura} viewport="aspect-[16/11]" />
-            <span class="mt-1 font-mono text-[13px] font-medium uppercase tracking-[.06em] text-warning">
+            <span class="mt-1 font-mono text-[13px] font-medium uppercase tracking-[.06em] text-warning-fg">
               <T t={{ es: `Paso ${i + 1}`, en: `Step ${i + 1}` }} />
             </span>
-            <h3 class="text-[19px] font-semibold text-white">
+            <h3 class="text-[19px] font-semibold">
               <T t={titulo} />
             </h3>
-            <p class="text-[14.5px] leading-normal text-green-100/80">
+            <p class="text-[14.5px] leading-normal text-fg-2">
               <T t={desc} />
             </p>
           </li>
