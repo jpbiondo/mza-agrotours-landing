@@ -1,7 +1,7 @@
-// Contenido de la landing en español e inglés. Sale tal cual del diseño
-// "Landing v4" de Claude Design; el español es el idioma por defecto (el que
-// queda en el HTML) y el inglés lo aplica src/scripts/landing.ts al cambiar
-// de idioma.
+// Contenido de la landing en español e inglés. Arrancó del diseño "Landing v4"
+// de Claude Design y desde ahí se edita acá. El español es el idioma por
+// defecto (el que queda en el HTML) y el inglés lo aplica src/scripts/landing.ts
+// al cambiar de idioma.
 
 export interface Txt {
   es: string;
@@ -46,7 +46,7 @@ export const recorridos: {
     ],
     con: t("Lo mismo, en un solo lugar y sin esperar respuesta.", "The same, in one place and without waiting for a reply."),
     pasos: [
-      { titulo: t("Encontrás la actividad", "Find the activity"), desc: t("Filtrás por tipo, zona y fecha.", "Filter by type, area and date."), via: t("Catálogo y mapa", "Catalog and map") },
+      { titulo: t("Encontrás la actividad", "Find the activity"), desc: t("Filtrás por cultivo y departamento.", "Filter by crop and department."), via: t("Catálogo", "Catalog") },
       { titulo: t("Ves cupos y precio al instante", "See availability and price instantly"), desc: t("Tarifas por rango de edad y cupos por fecha.", "Age-based rates and per-date capacity."), via: t("Reserva online", "Online booking") },
       { titulo: t("Pagás", "Pay"), desc: t("La reserva se confirma sola cuando entra el pago.", "The booking confirms itself once the payment goes through."), via: t("Mercado Pago", "Mercado Pago") },
       { titulo: t("Llegás preparado", "Arrive prepared"), desc: t("Confirmación por correo, ubicación y pronóstico del día.", "Email confirmation, location and the day’s forecast."), via: t("Correo, mapa y clima", "Email, map and weather") },
@@ -77,7 +77,7 @@ export const recorridos: {
 export const comoFunciona = [
   {
     titulo: t("Explorá", "Explore"),
-    desc: t("Actividades de todas las fincas, con filtros y mapa.", "Activities from every farm, with filters and a map."),
+    desc: t("Actividades de todas las fincas, con filtros por cultivo y departamento.", "Activities from every farm, filtered by crop and department."),
     pantalla: t("Explorar actividades", "Explore activities"),
     captura: "explorar-actividades",
   },
@@ -130,8 +130,8 @@ export const modulos = [
       "Visitors browse every activity published by farms across the province.",
     ),
     puntos: [
-      t("Catálogo con filtros por tipo, zona, fecha y precio", "Catalog filtered by type, area, date and price"),
-      t("Mapa de establecimientos", "Map of farms"),
+      t("Catálogo con filtros por cultivo y departamento", "Catalog filtered by crop and department"),
+      t("Catálogo de establecimientos", "Catalog of farms"),
       t("Detalle con fotos, duración, cupos y reseñas", "Details with photos, duration, availability and reviews"),
     ],
   },
@@ -175,21 +175,21 @@ export const modulos = [
   },
   {
     tab: t("Cultivos", "Crops"),
-    pantalla: t("Gestión de cultivos", "Crop management"),
-    captura: "gestion-de-cultivos",
+    pantalla: t("Información de cultivo", "Crop information"),
+    captura: "crop-information",
     foto: "modulo-cultivos", // racimos o frutales de estación
     titulo: t(
-      "Cada experiencia, en el momento justo de la temporada",
-      "Every experience at the right moment of the season",
+      "Conocé los cultivos detrás de cada experiencia",
+      "Learn about the crops behind each experience",
     ),
     desc: t(
-      "El registro de cultivos conecta lo que pasa en la finca con lo que se ofrece.",
-      "Crop records connect what happens on the farm with what is offered.",
+      "Catálogo de cultivos ofrecidos y las recetas que podés preparar con ellos.",
+      "A catalog of the crops on offer and recipes you can make with them.",
     ),
     puntos: [
-      t("Cultivos por establecimiento y temporada", "Crops per farm and season"),
-      t("Edición y baja de cultivos", "Edit and remove crops"),
-      t("Recetas asociadas a los productos", "Recipes linked to farm products"),
+      t("Cultivos por actividad y temporada", "Crops per activity and season"),
+      t("Los productores cargan y editan sus cultivos", "Producers add and edit their crops"),
+      t("Recetas asociadas a los cultivos", "Recipes linked to each crop"),
     ],
   },
   {
@@ -204,7 +204,7 @@ export const modulos = [
     ),
     puntos: [
       t("Chat visitante–establecimiento", "Visitor–farm chat"),
-      t("Asistente virtual y manuales por perfil", "Virtual assistant and guides per role"),
+      t("Manuales por perfil", "Guides per role"),
       t("Incidencias con estado y respuesta", "Issues with status and response"),
     ],
   },
@@ -233,10 +233,10 @@ export const alcance = [
     icono: "backpack",
     items: [
       [t("Registro y cuenta", "Sign-up and account"), t("Alta con datos personales, inicio de sesión y baja de cuenta.", "Sign-up with personal details, login and account deletion.")],
-      [t("Exploración", "Explore"), t("Catálogo filtrable, detalle de actividad y mapa de fincas.", "Filterable catalog, activity details and farm map.")],
+      [t("Exploración", "Explore"), t("Catálogo filtrable y detalle de actividad con la ubicación de la finca.", "Filterable catalog and activity details with the farm’s location.")],
       [t("Reservas y pagos", "Bookings and payments"), t("Solicitud con cupos y tarifas por edad, pago online.", "Requests with capacity and age-based rates, online payment.")],
       [t("Mis reservas", "My bookings"), t("Reprogramación, cancelación y seguimiento de reembolsos.", "Rescheduling, cancellation and refund tracking.")],
-      [t("Comunicación", "Messaging"), t("Chat con el establecimiento, asistente y preguntas frecuentes.", "Chat with the farm, assistant and FAQ.")],
+      [t("Comunicación", "Messaging"), t("Chat con el establecimiento y preguntas frecuentes.", "Chat with the farm and FAQ.")],
     ],
   },
   {
