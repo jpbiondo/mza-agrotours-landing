@@ -13,7 +13,7 @@ const t = (es: string, en: string): Txt => ({ es, en });
 export const nav = [
   { id: "proyecto", label: t("El proyecto", "Project") },
   { id: "modulos", label: t("Módulos", "Modules") },
-  { id: "temporadas", label: t("Temporadas", "Seasons") },
+  { id: "como-funciona", label: t("Cómo funciona", "How it works") },
   { id: "alcance", label: t("Alcance", "Scope") },
   { id: "tecnologia", label: t("Tecnología", "Technology") },
   { id: "equipo", label: t("Equipo", "Team") },
@@ -196,26 +196,6 @@ export const modulos = [
       t("Roles, parámetros y preguntas frecuentes", "Roles, settings and FAQ"),
     ],
   },
-];
-
-export const meses = {
-  es: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-  en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-};
-
-/** Rangos de meses [desde, hasta], 1 = enero. Un rango que cruza el año se parte en dos. */
-type Rango = [number, number];
-
-export const cultivos: { nombre: Txt; cosecha: Rango[]; poda: Rango[] }[] = [
-  { nombre: t("Vid · uva", "Grapevine"), cosecha: [[2, 4]], poda: [[6, 8]] },
-  { nombre: t("Olivo", "Olive"), cosecha: [[4, 6]], poda: [[8, 9]] },
-  { nombre: t("Durazno", "Peach"), cosecha: [[12, 12], [1, 3]], poda: [[6, 7]] },
-  { nombre: t("Ciruela", "Plum"), cosecha: [[1, 3]], poda: [[6, 7]] },
-  { nombre: t("Damasco", "Apricot"), cosecha: [[12, 12], [1, 1]], poda: [] },
-  { nombre: t("Cereza", "Cherry"), cosecha: [[11, 12]], poda: [[7, 8]] },
-  { nombre: t("Nogal · nuez", "Walnut"), cosecha: [[3, 4]], poda: [] },
-  { nombre: t("Ajo", "Garlic"), cosecha: [[11, 12]], poda: [] },
-  { nombre: t("Tomate", "Tomato"), cosecha: [[1, 4]], poda: [] },
 ];
 
 export const alcance = [

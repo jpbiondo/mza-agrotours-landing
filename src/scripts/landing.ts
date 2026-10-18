@@ -1,6 +1,6 @@
-// Interacción de la landing: idioma, pestañas de módulos, mes actual en el
-// calendario de temporadas, aparición al hacer scroll, link activo de la
-// navbar y menú mobile. Todo opera sobre HTML ya renderizado por Astro.
+// Interacción de la landing: idioma, pestañas de módulos, recorrido del
+// problema por perfil, aparición al hacer scroll, link activo de la navbar y
+// menú mobile. Todo opera sobre HTML ya renderizado por Astro.
 
 type Lang = "es" | "en";
 const CLAVE_IDIOMA = "mat-landing-lang";
@@ -94,11 +94,6 @@ if (tablist) {
     if (e.key === "End") mostrar(tabs.length - 1, true);
   });
 }
-
-/* ---- Mes actual en temporadas ------------------------------------------ */
-
-const mes = String(new Date().getMonth() + 1);
-document.querySelectorAll<HTMLElement>(`[data-seasons] [data-month="${mes}"]`).forEach((el) => (el.dataset.now = ""));
 
 /* ---- Aparición al hacer scroll ------------------------------------------ */
 
