@@ -1,0 +1,56 @@
+---
+import { Image } from "astro:assets";
+
+import { equipo } from "../../data/landing";
+import { fotoEquipo } from "../../lib/assets";
+import SectionHeader from "../ui/SectionHeader.astro";
+import T from "../ui/T.astro";
+
+const iniciales = (nombre: string) =>
+  nombre
+    .split(" ")
+    .filter((_, i, partes) => i === 0 || i === partes.length - 1)
+    .map((p) => p[0])
+    .join("");
+---
+
+<section id="equipo" class="pt-20 sm:pt-28" data-screen-label="Equipo">
+  <div class="mx-auto max-w-300 px-5 sm:px-7">
+    <SectionHeader
+      label={{ es: "Equipo", en: "Team" }}
+      title={{ es: "Quiénes lo hicimos", en: "Who built it" }}
+      intro={{
+        es: "Grupo 6. Los cuatro participamos además como analistas funcionales.",
+        en: "Group 6. All four of us also worked as functional analysts.",
+      }}
+    />
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 desk:grid-cols-4">
+      {
+        equipo.map(({ nombre, foto, rol }) => {
+          const imagen = fotoEquipo(foto);
+          return (
+            <div class="reveal flex flex-col gap-3.5 rounded-lg border border-outline-variant bg-surface p-5">
+              {imagen ? (
+                <Image src={imagen} alt={nombre} width={128} height={128} class="size-16 rounded-full object-cover" />
+              ) : (
+                <span
+                  class="grid size-16 place-items-center rounded-full bg-green-050 font-display text-xl font-semibold text-green-800"
+                  aria-hidden="true"
+                >
+                  {iniciales(nombre)}
+                </span>
+              )}
+              <div>
+                <b class="block font-display text-base font-semibold">{nombre}</b>
+                <small class="mt-1 block text-[13.5px] leading-[1.45] text-fg-2">
+                  <T t={rol} />
+                </small>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

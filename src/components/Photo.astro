@@ -1,0 +1,36 @@
+---
+import { Image } from "astro:assets";
+import { Image as ImageIcon } from "@lucide/astro";
+
+import { foto } from "../lib/assets";
+
+// Foto de src/assets/fotos/. Mientras no esté, ocupa su lugar un placeholder
+// tonal para no romper la composición.
+interface Props {
+  name: string;
+  alt: string;
+  class?: string;
+  sizes?: string;
+  eager?: boolean;
+}
+
+const { name, alt, class: className, sizes = "100vw", eager = false } = Astro.props;
+const imagen = foto(name);
+---
+
+{
+  imagen ? (
+    <Image
+      src={imagen}
+      alt={alt}
+      widths={[480, 960, 1440]}
+      sizes={sizes}
+      loading={eager ? "eager" : "lazy"}
+      class:list={["object-cover", className]}
+    />
+  ) : (
+    <div class:list={["grid place-items-center bg-cream-tert text-sand", className]} role="img" aria-label={alt}>
+      <ImageIcon size={36} stroke-width={1.5} />
+    </div>
+  )
+}

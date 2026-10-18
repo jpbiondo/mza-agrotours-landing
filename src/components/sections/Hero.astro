@@ -1,0 +1,73 @@
+---
+import { Backpack, ShieldCheck, Tractor } from "@lucide/astro";
+
+import BrowserFrame from "../BrowserFrame.astro";
+import Photo from "../Photo.astro";
+import Button from "../ui/Button.astro";
+import Pill from "../ui/Pill.astro";
+import T from "../ui/T.astro";
+
+const perfiles = [
+  { icon: Backpack, label: { es: "Visitantes", en: "Visitors" } },
+  { icon: Tractor, label: { es: "Productores", en: "Producers" } },
+  { icon: ShieldCheck, label: { es: "Administradores", en: "Administrators" } },
+];
+
+// El título lleva un <em>: es el único texto que se cambia como HTML.
+const titulo = {
+  es: "Conectamos viajeros con <em>la tierra mendocina</em>",
+  en: "Connecting travelers with <em>Mendoza’s farmland</em>",
+};
+---
+
+<section class="pt-12 sm:pt-18" data-screen-label="Hero">
+  <div class="mx-auto grid max-w-300 items-center gap-14 px-5 sm:px-7 desk:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+    <div class="reveal">
+      <Pill tone="success"><T t={{ es: "Lanzamiento en 2026", en: "Launching in 2026" }} /></Pill>
+      <h1
+        class="mt-5 text-display-lg font-bold leading-[1.08] tracking-[-.015em] [&_em]:not-italic [&_em]:text-green-800"
+        data-en-html={titulo.en}
+        set:html={titulo.es}
+      />
+      <p class="mt-6 max-w-125 text-lg leading-relaxed text-fg-2">
+        <T
+          t={{
+            es: "Una plataforma donde las fincas de Mendoza publican sus experiencias —cosechas, podas, degustaciones— y los visitantes las descubren, reservan y pagan en un solo lugar.",
+            en: "A platform where Mendoza’s farms publish their experiences —harvests, pruning, tastings— and visitors discover, book and pay for them in one place.",
+          }}
+        />
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href="#modulos"><T t={{ es: "Conocé los módulos", en: "See the modules" }} /></Button>
+        <Button href="#temporadas" variant="neutral"><T t={{ es: "Qué hay cada temporada", en: "What’s in season" }} /></Button>
+      </div>
+      <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-outline-variant pt-4 text-[13.5px] text-fg-2">
+        {
+          perfiles.map(({ icon: Icon, label }) => (
+            <span class="flex items-center gap-2">
+              <Icon size={16} stroke-width={1.75} class="text-green-800" />
+              <T t={label} />
+            </span>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="reveal relative h-100 sm:h-120 desk:h-135">
+      <Photo
+        name="hero"
+        alt="Cosecha de uva en una finca mendocina, a la hora dorada"
+        sizes="(max-width: 1000px) 78vw, 480px"
+        eager
+        class="absolute right-0 top-0 h-75 w-[78%] rounded-lg sm:h-110"
+      />
+      <BrowserFrame
+        label={{ es: "Explorar actividades", en: "Explore activities" }}
+        shot="explorar-actividades"
+        viewport="h-55 sm:h-75"
+        eager
+        class="absolute bottom-0 left-0 w-[72%]"
+      />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+---
+// Botón-link con el lenguaje táctil de la app (sombra inset inferior), copiado
+// de mza-agrotours-frontend/src/components/ui/Button.tsx.
+interface Props {
+  href: string;
+  variant?: "primary" | "neutral";
+  class?: string;
+}
+
+const { href, variant = "primary", class: className } = Astro.props;
+
+// El color del texto se fija también en hover: si no, el estilo de link del
+// navegador (o uno global) pinta el texto del mismo verde que el fondo.
+const variants = {
+  primary:
+    "border-transparent bg-green-800 text-fg-on-dark shadow-tactile-primary hover:bg-green-700 hover:text-fg-on-dark active:translate-y-px active:bg-green-900 active:shadow-none",
+  neutral:
+    "border-sand bg-surface text-fg-1 shadow-tactile-neutral hover:border-outline hover:bg-cream-tert hover:text-fg-1 active:translate-y-px active:shadow-none",
+};
+---
+
+<a
+  href={href}
+  class:list={[
+    "inline-flex select-none items-center justify-center gap-2 rounded-md border px-6 py-[15px] font-sans text-base font-semibold leading-none no-underline transition-[background-color,box-shadow,transform] duration-150 ease-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800",
+    variants[variant],
+    className,
+  ]}
+>
+  <slot />
+</a>

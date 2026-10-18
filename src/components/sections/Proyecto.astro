@@ -1,0 +1,58 @@
+---
+import { Check } from "@lucide/astro";
+
+import { comparacion } from "../../data/landing";
+import SectionHeader from "../ui/SectionHeader.astro";
+import T from "../ui/T.astro";
+
+const encabezado = "px-6 py-3.5 text-xs font-semibold uppercase tracking-widest border-b border-outline-variant";
+---
+
+<section id="proyecto" class="pt-20 sm:pt-28" data-screen-label="Problema">
+  <div class="mx-auto max-w-300 px-5 sm:px-7">
+    <SectionHeader
+      label={{ es: "El proyecto", en: "The project" }}
+      title={{ es: "Hacer turismo rural hoy es un trabajo aparte", en: "Rural tourism today is a job of its own" }}
+      intro={{
+        es: "Las fincas abren sus puertas con lo que tienen a mano: mensajes, redes y planillas. El visitante no sabe qué hay ni cuándo, y el productor gestiona todo en paralelo al trabajo del campo.",
+        en: "Farms open their doors with whatever they have at hand: messages, social media and spreadsheets. Visitors don’t know what’s available or when, and producers manage it all on top of their work in the field.",
+      }}
+    />
+
+    <!-- En mobile cada fila apila "hoy" arriba de "Mendoza AgroTours" y los encabezados se ocultan. -->
+    <div class="reveal mt-12 grid overflow-hidden rounded-lg border border-outline-variant bg-surface desk:grid-cols-2">
+      <div class:list={[encabezado, "hidden text-fg-3 desk:block"]}>
+        <T t={{ es: "Cómo se resuelve hoy", en: "How it’s done today" }} />
+      </div>
+      <div class:list={[encabezado, "hidden bg-green-050 text-green-800 desk:block"]}>
+        <T t={{ es: "Qué hace Mendoza AgroTours", en: "What Mendoza AgroTours does" }} />
+      </div>
+      {
+        comparacion.map(({ hoy, nosotros }, i) => {
+          const ultima = i === comparacion.length - 1;
+          return (
+            <>
+              <div
+                class:list={[
+                  "px-6 pb-1.5 pt-5 text-sm leading-normal text-fg-2 desk:py-5 desk:text-[15px]",
+                  !ultima && "desk:border-b desk:border-cream-tert",
+                ]}
+              >
+                <T t={hoy} />
+              </div>
+              <div
+                class:list={[
+                  "grid grid-cols-[20px_1fr] gap-2.5 bg-green-050 px-6 py-5 text-[15px] leading-normal",
+                  !ultima && "border-b border-outline-variant desk:border-cream-tert",
+                ]}
+              >
+                <Check size={18} stroke-width={1.75} class="mt-0.5 text-green-800" />
+                <T t={nosotros} />
+              </div>
+            </>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

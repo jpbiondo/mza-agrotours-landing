@@ -1,0 +1,56 @@
+---
+import { stack } from "../../data/landing";
+import SectionHeader from "../ui/SectionHeader.astro";
+import T from "../ui/T.astro";
+---
+
+<section id="tecnologia" class="pt-20 sm:pt-28" data-screen-label="Tecnología">
+  <div class="mx-auto max-w-300 px-5 sm:px-7">
+    <SectionHeader
+      label={{ es: "Tecnología", en: "Technology" }}
+      title={{ es: "Cómo está construido", en: "How it’s built" }}
+      intro={{
+        es: "Una aplicación web sobre una API REST, con responsabilidades separadas entre frontend, backend, datos y almacenamiento.",
+        en: "A web app on top of a REST API, with responsibilities split across frontend, backend, data and storage.",
+      }}
+    />
+
+    <div class="mt-12 flex flex-col gap-8">
+      {
+        stack.map(({ capa, items }) => (
+          <div class="reveal grid gap-3 desk:grid-cols-[180px_minmax(0,1fr)] desk:gap-6">
+            <div class="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-widest text-fg-2 before:size-2 before:rounded-full before:bg-green-800 before:content-[''] desk:items-start desk:pt-[22px] desk:before:mt-0.5">
+              <T t={capa} />
+            </div>
+            <div class="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
+              {items.map(({ nombre, tipo, desc, chips }) => (
+                <div class="flex flex-col gap-2 rounded-lg border border-outline-variant bg-surface p-5">
+                  <div class="flex items-baseline justify-between gap-2">
+                    <b class="text-[15px]">
+                      <T t={nombre} />
+                    </b>
+                    <span class="text-[11px] font-semibold uppercase tracking-[.08em] text-fg-3">
+                      <T t={tipo} />
+                    </span>
+                  </div>
+                  <p class="text-[13.5px] leading-normal text-fg-2">
+                    <T t={desc} />
+                  </p>
+                  {chips && (
+                    <div class="mt-1 flex flex-wrap gap-1.5">
+                      {chips.map((c) => (
+                        <span class="rounded-sm border border-outline-variant bg-cream-tert px-2 py-[3px] font-mono text-[11.5px] text-fg-2">
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

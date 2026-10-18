@@ -1,0 +1,14 @@
+---
+import type { Txt } from "../../data/landing";
+
+// Texto bilingüe: el español queda en el HTML y el inglés en `data-en`;
+// src/scripts/landing.ts los intercambia al cambiar de idioma.
+interface Props {
+  t: Txt;
+  class?: string;
+}
+
+const { t, class: className } = Astro.props;
+---
+
+<span class={className} data-en={t.en}>{t.es}</span>

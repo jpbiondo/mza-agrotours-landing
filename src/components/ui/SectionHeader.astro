@@ -1,0 +1,25 @@
+---
+import type { Txt } from "../../data/landing";
+import T from "./T.astro";
+
+// Encabezado de sección: etiqueta en mayúsculas, título y bajada opcional.
+interface Props {
+  label: Txt;
+  title: Txt;
+  intro?: Txt;
+}
+
+const { label, title, intro } = Astro.props;
+---
+
+<div class="reveal">
+  <T t={label} class="mb-3 block text-xs font-semibold uppercase tracking-[.12em] text-brown-700" />
+  <h2 class="text-[2rem] font-bold leading-[1.15] sm:text-display"><T t={title} /></h2>
+  {
+    intro && (
+      <p class="mt-4 max-w-160 text-body-lg leading-relaxed text-fg-2">
+        <T t={intro} />
+      </p>
+    )
+  }
+</div>

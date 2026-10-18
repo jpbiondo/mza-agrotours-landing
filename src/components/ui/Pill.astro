@@ -1,0 +1,26 @@
+---
+// Pill de estado del design system: punto de color + texto, sobre un relleno suave.
+interface Props {
+  tone?: "success" | "warning" | "info" | "neutral";
+  class?: string;
+}
+
+const { tone = "neutral", class: className } = Astro.props;
+
+const tones = {
+  success: "bg-success-fill text-success-fg",
+  warning: "bg-warning-fill text-warning-fg",
+  info: "bg-info-fill text-info-fg",
+  neutral: "bg-cream-tert text-fg-2",
+};
+---
+
+<span
+  class:list={[
+    "inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill px-3 py-1.5 font-sans text-xs font-semibold leading-none before:size-[7px] before:rounded-full before:bg-current before:opacity-90 before:content-['']",
+    tones[tone],
+    className,
+  ]}
+>
+  <slot />
+</span>

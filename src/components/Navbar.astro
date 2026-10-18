@@ -1,0 +1,72 @@
+---
+import { Menu, X } from "@lucide/astro";
+
+import { nav } from "../data/landing";
+import Brand from "./Brand.astro";
+import Pill from "./ui/Pill.astro";
+import T from "./ui/T.astro";
+
+// El link de la sección visible lo marca el script con `data-on`.
+const link =
+  "whitespace-nowrap rounded-md px-3 py-2 text-[14.5px] font-medium text-fg-2 no-underline transition-colors duration-150 ease-out not-data-on:hover:bg-cream-tert data-on:bg-green-050 data-on:font-semibold data-on:text-green-800";
+---
+
+<header class="sticky top-0 z-30 border-b border-outline-variant bg-cream-bg/92 backdrop-blur-[8px]">
+  <div class="mx-auto flex h-17 max-w-300 items-center gap-[18px] px-5 sm:px-7">
+    <Brand />
+
+    <nav class="ml-3 hidden gap-0.5 nav:flex" aria-label="Secciones">
+      {nav.map(({ id, label }) => <a href={`#${id}`} class={link} data-nav={id}><T t={label} /></a>)}
+    </nav>
+
+    <div class="ml-auto flex items-center gap-3">
+      <Pill tone="warning" class="max-[600px]:hidden"><T t={{ es: "Próximamente", en: "Coming soon" }} /></Pill>
+
+      <div class="inline-flex gap-0.5 rounded-pill border border-outline-variant bg-surface p-[3px]" role="group" aria-label="Idioma">
+        {
+          ["es", "en"].map((l) => (
+            <button
+              type="button"
+              data-lang={l}
+              aria-pressed={l === "es" ? "true" : "false"}
+              class="cursor-pointer rounded-pill px-2.5 py-[5px] text-xs font-semibold uppercase tracking-[.04em] text-fg-2 transition-colors duration-150 ease-brand not-aria-pressed:hover:text-green-800 aria-pressed:bg-green-800 aria-pressed:text-white"
+            >
+              {l}
+            </button>
+          ))
+        }
+      </div>
+
+      <!-- Menú para pantallas angostas: el diseño ocultaba los links sin alternativa. -->
+      <button
+        type="button"
+        id="menu-btn"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+        aria-label="Abrir menú"
+        class="group -mr-2 grid size-10 cursor-pointer place-items-center rounded-md text-fg-1 hover:bg-cream-tert nav:hidden"
+      >
+        <Menu size={22} stroke-width={1.75} class="group-aria-expanded:hidden" />
+        <X size={22} stroke-width={1.75} class="hidden group-aria-expanded:block" />
+      </button>
+    </div>
+  </div>
+
+  <nav
+    id="menu-movil"
+    class="hidden border-t border-outline-variant bg-cream-bg px-3 py-3 nav:hidden!"
+    aria-label="Secciones"
+  >
+    <ul class="mx-auto flex max-w-300 flex-col gap-0.5">
+      {
+        nav.map(({ id, label }) => (
+          <li>
+            <a href={`#${id}`} class:list={[link, "block py-3 text-base"]} data-nav={id}>
+              <T t={label} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>

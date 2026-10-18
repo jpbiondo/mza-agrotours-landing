@@ -1,0 +1,24 @@
+---
+// Logo + nombre. El logo es el mismo que usa la app en su header.
+interface Props {
+  /** Sobre fondo oscuro (footer): textos claros y el logo sobre una placa crema. */
+  dark?: boolean;
+}
+
+const { dark = false } = Astro.props;
+---
+
+<a href="#top" class="flex shrink-0 items-center gap-[11px] no-underline" aria-label="Mendoza AgroTours, ir al inicio">
+  <span class:list={["flex", dark && "rounded-md bg-cream-bg px-1.5 py-1"]}>
+    <img src="/logo-pano.svg" width="45" height="30" alt="" />
+  </span>
+  <span class="leading-none">
+    <span class:list={["block font-display text-lg font-bold", dark ? "text-white" : "text-green-800"]}>Mendoza</span>
+    <span
+      class:list={[
+        "mt-0.5 block text-[10px] font-semibold uppercase tracking-[.12em]",
+        dark ? "text-brown-200" : "text-brown-700",
+      ]}>AgroTours</span
+    >
+  </span>
+</a>

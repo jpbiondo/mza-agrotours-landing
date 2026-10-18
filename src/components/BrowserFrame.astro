@@ -1,0 +1,53 @@
+---
+import { Image } from "astro:assets";
+import { MonitorSmartphone } from "@lucide/astro";
+
+import type { Txt } from "../data/landing";
+import { captura } from "../lib/assets";
+import T from "./ui/T.astro";
+
+// Ventana de navegador con una pantalla del prototipo. El diseño embebía el
+// prototipo en un iframe escalado; acá va una captura a 1280px de ancho
+// recortada desde arriba, que pesa menos y no depende del prototipo.
+interface Props {
+  label: Txt;
+  /** Nombre de la captura en src/assets/capturas/. */
+  shot: string;
+  /** Clases de alto del área visible (p. ej. "h-[300px]"). */
+  viewport: string;
+  class?: string;
+  /** La captura del hero se ve sin hacer scroll: no conviene cargarla diferida. */
+  eager?: boolean;
+}
+
+const { label, shot, viewport, class: className, eager = false } = Astro.props;
+const imagen = captura(shot);
+---
+
+<div class:list={["overflow-hidden rounded-lg border border-outline-variant bg-surface shadow-pop", className]}>
+  <div class="flex h-8 items-center gap-1.5 border-b border-outline-variant bg-cream-tert px-3" aria-hidden="true">
+    <i class="size-[9px] rounded-full bg-sand"></i>
+    <i class="size-[9px] rounded-full bg-sand"></i>
+    <i class="size-[9px] rounded-full bg-sand"></i>
+    <span class="ml-2.5 truncate font-mono text-[11px] text-fg-3" data-frame-label><T t={label} /></span>
+  </div>
+  <div class:list={["relative overflow-hidden bg-cream-bg", viewport]}>
+    {
+      imagen ? (
+        <Image
+          src={imagen}
+          alt=""
+          widths={[640, 1280]}
+          sizes="(max-width: 1000px) 100vw, 760px"
+          loading={eager ? "eager" : "lazy"}
+          class="size-full object-cover object-top"
+          data-frame-img
+        />
+      ) : (
+        <div class="grid size-full place-items-center text-fg-3">
+          <MonitorSmartphone size={32} stroke-width={1.5} />
+        </div>
+      )
+    }
+  </div>
+</div>

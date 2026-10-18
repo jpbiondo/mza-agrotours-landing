@@ -12,8 +12,8 @@ interface Props {
 }
 
 const {
-  title = "Mendoza AgroTours",
-  description = "Turismo rural en Mendoza.",
+  title = "Mendoza AgroTours — Próximamente",
+  description = "Una plataforma donde las fincas de Mendoza publican sus experiencias —cosechas, podas, degustaciones— y los visitantes las descubren, reservan y pagan en un solo lugar.",
 } = Astro.props;
 ---
 
@@ -26,6 +26,13 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="es_AR" />
+    <meta name="theme-color" content="#154212" />
+    <!-- Antes de pintar: habilita las animaciones de aparición (ver `reveal` en global.css). -->
+    <script is:inline>document.documentElement.classList.add("js");</script>
   </head>
   <body>
     <slot />
