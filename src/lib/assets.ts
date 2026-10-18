@@ -8,7 +8,6 @@ type Modulos = Record<string, { default: ImageMetadata }>;
 
 const capturas = import.meta.glob<{ default: ImageMetadata }>("../assets/capturas/*.{png,jpg,jpeg,webp}", { eager: true });
 const fotos = import.meta.glob<{ default: ImageMetadata }>("../assets/fotos/*.{png,jpg,jpeg,webp}", { eager: true });
-const equipo = import.meta.glob<{ default: ImageMetadata }>("../assets/equipo/*.{png,jpg,jpeg,webp}", { eager: true });
 
 function buscar(modulos: Modulos, nombre: string): ImageMetadata | undefined {
   const entrada = Object.entries(modulos).find(([ruta]) => ruta.replace(/^.*\//, "").replace(/\.\w+$/, "") === nombre);
@@ -17,4 +16,3 @@ function buscar(modulos: Modulos, nombre: string): ImageMetadata | undefined {
 
 export const captura = (nombre: string) => buscar(capturas, nombre);
 export const foto = (nombre: string) => buscar(fotos, nombre);
-export const fotoEquipo = (nombre: string) => buscar(equipo, nombre);

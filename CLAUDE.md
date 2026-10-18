@@ -30,7 +30,7 @@ Se buscan por nombre de archivo (sin extensión), en png/jpg/webp. Si falta, se 
 
 - `src/assets/fotos/hero.*`: foto del hero (cosecha de uva, hora dorada). Las fotos `modulo-*.*` se muestran bajo cada módulo solo si existen.
 - `src/assets/capturas/*.*`: capturas a 1280px de ancho de las pantallas del prototipo (`explorar-actividades`, `solicitar-reserva`, `calendario-de-actividad`, `gestion-de-cultivos`, `chats`, `panel-del-sistema`). Reemplazan a los iframes del diseño.
-- `src/assets/equipo/{lin,biondo,lopez,oberti}.*`: fotos del equipo; sin foto, van las iniciales.
+- Equipo: la foto es el avatar de GitHub de cada uno (`github.com/<usuario>.png`), cargado en vivo; el usuario está en `equipo` de data/landing.ts.
 
 ## Estética compartida con la app
 

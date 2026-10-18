@@ -1,18 +1,8 @@
 ---
-import { Image } from "astro:assets";
-
 import { equipo } from "../../data/landing";
-import { fotoEquipo } from "../../lib/assets";
 import GithubIcon from "../ui/GithubIcon.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 import T from "../ui/T.astro";
-
-const iniciales = (nombre: string) =>
-  nombre
-    .split(" ")
-    .filter((_, i, partes) => i === 0 || i === partes.length - 1)
-    .map((p) => p[0])
-    .join("");
 ---
 
 <section id="equipo" class="pt-20 sm:pt-28" data-screen-label="Equipo">
@@ -28,8 +18,7 @@ const iniciales = (nombre: string) =>
 
     <div class="mt-12 grid gap-4 sm:grid-cols-2 desk:grid-cols-4">
       {
-        equipo.map(({ nombre, foto, github, rol }) => {
-          const imagen = fotoEquipo(foto);
+        equipo.map(({ nombre, github, rol }) => {
           return (
             <a
               href={`https://github.com/${github}`}
@@ -38,16 +27,15 @@ const iniciales = (nombre: string) =>
               aria-label={`${nombre} en GitHub`}
               class="reveal group flex flex-col gap-3.5 rounded-lg border border-outline-variant bg-surface p-5 text-fg-1 no-underline transition-[box-shadow,border-color] duration-150 ease-brand hover:border-sand hover:text-fg-1 hover:shadow-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
             >
-              {imagen ? (
-                <Image src={imagen} alt="" width={128} height={128} class="size-16 rounded-full object-cover" />
-              ) : (
-                <span
-                  class="grid size-16 place-items-center rounded-full bg-green-050 font-display text-xl font-semibold text-green-800"
-                  aria-hidden="true"
-                >
-                  {iniciales(nombre)}
-                </span>
-              )}
+              {/* Avatar servido por GitHub: se actualiza solo cuando cambian su foto. */}
+              <img
+                src={`https://github.com/${github}.png?size=128`}
+                alt=""
+                width="64"
+                height="64"
+                loading="lazy"
+                class="size-16 rounded-full bg-cream-tert object-cover"
+              />
               <div>
                 <b class="block font-display text-base font-semibold">{nombre}</b>
                 <small class="mt-1 block text-[13.5px] leading-[1.45] text-fg-2">
