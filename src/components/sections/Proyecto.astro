@@ -18,7 +18,7 @@ const colores = {
   productor: {
     boton: "aria-pressed:bg-brown-700",
     punto: "bg-brown-700",
-    panel: "border-brown-700 bg-brown-100/50",
+    panel: "border-brown-700 bg-surface",
     titulo: "text-brown-700",
     numero: "bg-brown-700",
     linea: "bg-brown-700/25",
@@ -36,7 +36,7 @@ const desorden = [
 ];
 ---
 
-<section id="proyecto" class="pt-20 sm:pt-28" data-screen-label="Problema">
+<section id="proyecto" class="bg-brown-100 py-20 sm:py-28" data-screen-label="Problema">
   <div class="mx-auto max-w-300 px-5 sm:px-7">
     <SectionHeader
       label={{ es: "El proyecto", en: "The project" }}
@@ -51,7 +51,7 @@ const desorden = [
          tuviera su propio `reveal`, al mostrarlo quedaría transparente. -->
     <div class="reveal mt-8">
       <span id="recorrido-label" class="sr-only"><T t={{ es: "Ver el recorrido de", en: "Show the journey of" }} /></span>
-      <div class="inline-flex gap-1 rounded-pill border border-outline-variant bg-cream-tert p-1" role="group" aria-labelledby="recorrido-label">
+      <div class="inline-flex gap-1 rounded-pill border border-brown-200 bg-surface p-1" role="group" aria-labelledby="recorrido-label">
         {
           recorridos.map(({ perfil, nombre }, i) => (
             <button
@@ -75,7 +75,7 @@ const desorden = [
           const c = colores[perfil];
           return (
             <div class="mt-7 grid gap-5 desk:grid-cols-2 desk:gap-7" data-recorrido={perfil} hidden={i !== 0}>
-              <div class="min-w-0 rounded-lg border border-outline-variant bg-cream-tert p-6 sm:p-7">
+              <div class="min-w-0 rounded-lg border border-brown-200 bg-cream-bg p-6 sm:p-7">
                 <h3 class="text-xl font-semibold">
                   <T t={{ es: "Hoy", en: "Today" }} />
                 </h3>

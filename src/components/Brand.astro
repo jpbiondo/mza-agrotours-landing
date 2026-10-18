@@ -1,11 +1,22 @@
 ---
 // Logo + nombre. El logo es el mismo que usa la app en su header.
+// `dark`: sobre verde oscuro el logo casi no se ve (la montaña es green-800),
+// así que va sobre una placa crema y el nombre pasa a tonos claros.
+interface Props {
+  dark?: boolean;
+}
+
+const { dark = false } = Astro.props;
 ---
 
 <a href="#top" class="flex shrink-0 items-center gap-[11px] no-underline" aria-label="Mendoza AgroTours, ir al inicio">
-  <img src="/logo-pano.svg" width="45" height="30" alt="" />
+  <span class:list={[dark && "rounded-md bg-cream-bg px-1.5 py-1"]}>
+    <img src="/logo-pano.svg" width="45" height="30" alt="" class="block" />
+  </span>
   <span class="leading-none">
-    <span class="block font-display text-lg font-bold text-green-800">Mendoza</span>
-    <span class="mt-0.5 block text-[10px] font-semibold uppercase tracking-[.12em] text-brown-700">AgroTours</span>
+    <span class:list={["block font-display text-lg font-bold", dark ? "text-white" : "text-green-800"]}>Mendoza</span>
+    <span class:list={["mt-0.5 block text-[10px] font-semibold uppercase tracking-[.12em]", dark ? "text-brown-200" : "text-brown-700"]}>
+      AgroTours
+    </span>
   </span>
 </a>
