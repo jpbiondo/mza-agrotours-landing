@@ -12,8 +12,8 @@ const t = (es: string, en: string): Txt => ({ es, en });
 
 export const nav = [
   { id: "problema", label: t("Problema", "Problem") },
-  { id: "modulos", label: t("Módulos", "Modules") },
   { id: "como-funciona", label: t("Cómo funciona", "How it works") },
+  { id: "modulos", label: t("Módulos", "Modules") },
   { id: "alcance", label: t("Alcance", "Scope") },
   { id: "tecnologia", label: t("Tecnología", "Technology") },
   { id: "equipo", label: t("Equipo", "Team") },
