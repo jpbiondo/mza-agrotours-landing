@@ -315,10 +315,15 @@ export const stack: { capa: Txt; items: { nombre: Txt; tipo: Txt; desc: Txt; chi
   },
 ];
 
-/** `foto` es el nombre (sin extensión) de la foto en src/assets/equipo/; si falta, se muestran las iniciales. */
+/**
+ * `foto` es el nombre (sin extensión) de la foto en src/assets/equipo/; si
+ * falta, se muestran las iniciales. Las fotos son los avatares de GitHub
+ * (github.com/<usuario>.png), bajados al repo; quien tiene el avatar genérico
+ * de GitHub queda con iniciales.
+ */
 export const equipo = [
-  { nombre: "Hsin Yu Lin", foto: "lin", rol: t("Líder de proyecto · Backend", "Project lead · Backend") },
-  { nombre: "Juan Pablo Biondo", foto: "biondo", rol: t("Líder técnico · Frontend · UX/UI", "Tech lead · Frontend · UX/UI") },
-  { nombre: "Leandro López", foto: "lopez", rol: t("Frontend · UX/UI", "Frontend · UX/UI") },
-  { nombre: "Lucila Oberti", foto: "oberti", rol: t("Backend", "Backend") },
+  { nombre: "Hsin Yu Lin", foto: "lin", github: "hsinyulin03", rol: t("Líder de proyecto · Backend", "Project lead · Backend") },
+  { nombre: "Juan Pablo Biondo", foto: "biondo", github: "jpbiondo", rol: t("Líder técnico · Frontend · UX/UI", "Tech lead · Frontend · UX/UI") },
+  { nombre: "Leandro López", foto: "lopez", github: "L-LopezMartin", rol: t("Frontend · UX/UI", "Frontend · UX/UI") },
+  { nombre: "Lucila Oberti", foto: "oberti", github: "lucilaoberti", rol: t("Backend", "Backend") },
 ];

@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 
 import { equipo } from "../../data/landing";
 import { fotoEquipo } from "../../lib/assets";
+import GithubIcon from "../ui/GithubIcon.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 import T from "../ui/T.astro";
 
@@ -27,12 +28,18 @@ const iniciales = (nombre: string) =>
 
     <div class="mt-12 grid gap-4 sm:grid-cols-2 desk:grid-cols-4">
       {
-        equipo.map(({ nombre, foto, rol }) => {
+        equipo.map(({ nombre, foto, github, rol }) => {
           const imagen = fotoEquipo(foto);
           return (
-            <div class="reveal flex flex-col gap-3.5 rounded-lg border border-outline-variant bg-surface p-5">
+            <a
+              href={`https://github.com/${github}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${nombre} en GitHub`}
+              class="reveal group flex flex-col gap-3.5 rounded-lg border border-outline-variant bg-surface p-5 text-fg-1 no-underline transition-[box-shadow,border-color] duration-150 ease-brand hover:border-sand hover:text-fg-1 hover:shadow-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
+            >
               {imagen ? (
-                <Image src={imagen} alt={nombre} width={128} height={128} class="size-16 rounded-full object-cover" />
+                <Image src={imagen} alt="" width={128} height={128} class="size-16 rounded-full object-cover" />
               ) : (
                 <span
                   class="grid size-16 place-items-center rounded-full bg-green-050 font-display text-xl font-semibold text-green-800"
@@ -47,7 +54,11 @@ const iniciales = (nombre: string) =>
                   <T t={rol} />
                 </small>
               </div>
-            </div>
+              <span class="mt-auto flex items-center gap-1.5 font-mono text-xs text-fg-3 transition-colors group-hover:text-green-800">
+                <GithubIcon size={14} />
+                {github}
+              </span>
+            </a>
           );
         })
       }
