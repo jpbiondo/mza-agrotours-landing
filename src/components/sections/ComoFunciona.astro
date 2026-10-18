@@ -1,0 +1,37 @@
+---
+import { comoFunciona } from "../../data/landing";
+import BrowserFrame from "../BrowserFrame.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+import T from "../ui/T.astro";
+---
+
+<!-- Banda a todo el ancho en verde oscuro, para cortar la seguidilla de fondos crema. -->
+<section id="como-funciona" class="mt-20 bg-green-900 py-20 sm:mt-28 sm:py-28" data-screen-label="Cómo funciona">
+  <div class="mx-auto max-w-300 px-5 sm:px-7">
+    <SectionHeader
+      dark
+      label={{ es: "Cómo funciona", en: "How it works" }}
+      title={{ es: "De la búsqueda a la finca, en cuatro pasos", en: "From search to farm, in four steps" }}
+      intro={{ es: "El recorrido del visitante, pantalla por pantalla.", en: "The visitor’s journey, screen by screen." }}
+    />
+
+    <ol class="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 desk:grid-cols-4">
+      {
+        comoFunciona.map(({ titulo, desc, pantalla, captura }, i) => (
+          <li class="reveal flex min-w-0 flex-col gap-3.5">
+            <BrowserFrame label={pantalla} shot={captura} viewport="aspect-[16/11]" />
+            <span class="mt-1 font-mono text-[13px] font-medium uppercase tracking-[.06em] text-warning">
+              <T t={{ es: `Paso ${i + 1}`, en: `Step ${i + 1}` }} />
+            </span>
+            <h3 class="text-[19px] font-semibold text-white">
+              <T t={titulo} />
+            </h3>
+            <p class="text-[14.5px] leading-normal text-green-100/80">
+              <T t={desc} />
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

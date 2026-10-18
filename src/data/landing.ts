@@ -73,6 +73,43 @@ export const recorridos: {
   },
 ];
 
+/** Recorrido del visitante, una captura por paso (ver `captura` en `modulos`). */
+export const comoFunciona = [
+  {
+    titulo: t("Explorá", "Explore"),
+    desc: t("Actividades de todas las fincas, con filtros y mapa.", "Activities from every farm, with filters and a map."),
+    pantalla: t("Explorar actividades", "Explore activities"),
+    captura: "explorar-actividades",
+  },
+  {
+    titulo: t("Reservá", "Book"),
+    desc: t(
+      "Elegís fecha y participantes, y la tarifa por edad se calcula al momento.",
+      "Pick a date and participants, and age-based rates are worked out on the spot.",
+    ),
+    pantalla: t("Solicitar reserva", "Book an activity"),
+    captura: "solicitar-reserva",
+  },
+  {
+    titulo: t("Pagá", "Pay"),
+    desc: t(
+      "Con Mercado Pago. La reserva se confirma cuando entra el pago.",
+      "With Mercado Pago. The booking is confirmed once the payment goes through.",
+    ),
+    pantalla: t("Pagar reserva", "Pay for the booking"),
+    captura: "pagar-reserva",
+  },
+  {
+    titulo: t("Llegá preparado", "Arrive prepared"),
+    desc: t(
+      "En tu reserva tenés la ubicación de la finca y el pronóstico del día.",
+      "Your booking shows the farm’s location and the day’s forecast.",
+    ),
+    pantalla: t("Detalle de reserva", "Booking details"),
+    captura: "detalle-de-reserva",
+  },
+];
+
 /**
  * `captura` es el nombre (sin extensión) de la captura de pantalla en
  * src/assets/capturas/; `foto`, el de la foto en src/assets/fotos/. Si el

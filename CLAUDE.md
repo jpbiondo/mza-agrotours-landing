@@ -12,8 +12,12 @@ La app completa (Next.js + Firebase + backend Spring) vive en el repo hermano `.
 
 ## Diseño
 
-- Fuente de verdad: Claude Design, archivo `Landing v4.html` del proyecto
-  `https://claude.ai/design/p/b9bf5625-e73e-4f35-bfc4-cd2e7a8acde6`. No inventar el diseño.
+- Punto de partida: Claude Design, archivo `Landing v4.html` del proyecto
+  `https://claude.ai/design/p/b9bf5625-e73e-4f35-bfc4-cd2e7a8acde6`. La landing ya se separó de ese archivo
+  (sin Temporadas, problema como recorrido por perfil, sección Cómo funciona) y los cambios se hacen
+  directo acá, no en Claude Design.
+- Color por perfil, en toda la página: visitante verde (`green-800`), productor marrón (`brown-700`),
+  administración azul (`info`). El ocre (`warning`) es el acento cálido.
 - Tiene que ser responsive (mobile first).
 - Si el diseño tiene bugs de UI evidentes (p. ej. un botón verde relleno cuyo texto se vuelve verde en hover), se corrigen.
 
@@ -21,7 +25,7 @@ La app completa (Next.js + Firebase + backend Spring) vive en el repo hermano `.
 
 - [src/data/landing.ts](src/data/landing.ts): todos los textos, en `{ es, en }`.
 - `src/components/sections/`: una sección por archivo; `src/components/ui/`: piezas chicas (Button, Pill, T…).
-- [src/scripts/landing.ts](src/scripts/landing.ts): idioma ES/EN (intercambia `data-en`), pestañas de módulos, mes actual, aparición al scroll, link activo y menú mobile.
+- [src/scripts/landing.ts](src/scripts/landing.ts): idioma ES/EN (intercambia `data-en`), pestañas de módulos, recorrido del problema por perfil, aparición al scroll, link activo y menú mobile.
 - Breakpoints propios: `desk:` (1000px) y `nav:` (1100px), definidos en rem en `@theme`.
 
 ## Imágenes
@@ -29,7 +33,7 @@ La app completa (Next.js + Firebase + backend Spring) vive en el repo hermano `.
 Se buscan por nombre de archivo (sin extensión), en png/jpg/webp. Si falta, se muestra un placeholder:
 
 - `src/assets/fotos/hero.*`: foto del hero (cosecha de uva, hora dorada). Las fotos `modulo-*.*` se muestran bajo cada módulo solo si existen.
-- `src/assets/capturas/*.*`: capturas a 1280px de ancho de las pantallas del prototipo (`explorar-actividades`, `solicitar-reserva`, `calendario-de-actividad`, `gestion-de-cultivos`, `chats`, `panel-del-sistema`). Reemplazan a los iframes del diseño.
+- `src/assets/capturas/*.*`: capturas a 1280px de ancho de las pantallas del prototipo (`explorar-actividades`, `solicitar-reserva`, `pagar-reserva`, `detalle-de-reserva`, `calendario-de-actividad`, `gestion-de-cultivos`, `chats`, `panel-del-sistema`). Reemplazan a los iframes del diseño.
 - Equipo: la foto es el avatar de GitHub de cada uno (`github.com/<usuario>.png`), cargado en vivo; el usuario está en `equipo` de data/landing.ts.
 
 ## Estética compartida con la app
