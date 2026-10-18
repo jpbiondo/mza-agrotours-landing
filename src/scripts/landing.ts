@@ -107,6 +107,28 @@ botonesRecorrido.forEach((b) => {
   });
 });
 
+/* ---- Visor de capturas (Cómo funciona) --------------------------------- */
+
+const visor = document.querySelector<HTMLDialogElement>("[data-visor]");
+const visorImg = visor?.querySelector<HTMLImageElement>("[data-visor-img]");
+if (visor && visorImg) {
+  document.querySelectorAll<HTMLButtonElement>("[data-ampliar]").forEach((b) => {
+    b.addEventListener("click", () => {
+      const en = document.documentElement.lang === "en";
+      visorImg.src = b.dataset.ampliar ?? "";
+      visorImg.width = Number(b.dataset.ampliarAncho);
+      visorImg.height = Number(b.dataset.ampliarAlto);
+      visorImg.alt = (en ? b.dataset.ampliarEn : b.dataset.ampliarEs) ?? "";
+      visor.showModal();
+    });
+  });
+  visor.querySelector("[data-visor-cerrar]")?.addEventListener("click", () => visor.close());
+  // El click en el fondo llega al <dialog> mismo; en la imagen o el botón, no.
+  visor.addEventListener("click", (e) => {
+    if (e.target === visor) visor.close();
+  });
+}
+
 /* ---- Aparición al hacer scroll ------------------------------------------ */
 
 // Cada elemento aparece una sola vez. Al aparecer uno, también se dan por

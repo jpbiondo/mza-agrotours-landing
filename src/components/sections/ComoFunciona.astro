@@ -1,11 +1,26 @@
 ---
+import { getImage } from "astro:assets";
+import { Maximize2, X } from "@lucide/astro";
+
 import { comoFunciona } from "../../data/landing";
+import { captura as buscarCaptura } from "../../lib/assets";
 import BrowserFrame from "../BrowserFrame.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 import T from "../ui/T.astro";
+
+// Cada captura se puede ampliar: el botón guarda la versión grande y
+// src/scripts/landing.ts la abre en el <dialog> de abajo. Si la captura
+// todavía no está, el paso se muestra sin botón.
+const pasos = await Promise.all(
+  comoFunciona.map(async (paso) => {
+    const imagen = buscarCaptura(paso.captura);
+    const grande = imagen ? await getImage({ src: imagen, width: Math.min(imagen.width, 1920) }) : undefined;
+    return { ...paso, grande };
+  }),
+);
 ---
 
-<!-- Banda arena, como las demás secciones pares. -->
+<!-- Fondo crema: va entre Problema y Módulos, que son arena. -->
 <section id="como-funciona" class="py-20 sm:py-28" data-screen-label="Cómo funciona">
   <div class="mx-auto max-w-300 px-5 sm:px-7">
     <SectionHeader
@@ -16,9 +31,35 @@ import T from "../ui/T.astro";
 
     <ol class="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 desk:grid-cols-4">
       {
-        comoFunciona.map(({ titulo, desc, pantalla, captura }, i) => (
+        pasos.map(({ titulo, desc, pantalla, captura, grande }, i) => (
           <li class="reveal flex min-w-0 flex-col gap-3.5">
-            <BrowserFrame label={pantalla} shot={captura} viewport="aspect-[16/11]" />
+            {grande ? (
+              <button
+                type="button"
+                class="group relative block cursor-zoom-in rounded-lg text-left transition-transform duration-200 ease-brand hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                data-ampliar={grande.src}
+                data-ampliar-ancho={grande.attributes.width}
+                data-ampliar-alto={grande.attributes.height}
+                data-ampliar-es={pantalla.es}
+                data-ampliar-en={pantalla.en}
+              >
+                <BrowserFrame
+                  label={pantalla}
+                  shot={captura}
+                  viewport="aspect-[16/11]"
+                  class="transition-shadow duration-200 group-hover:shadow-[0_14px_36px_rgba(45,90,39,.2)]"
+                />
+                <span
+                  class="absolute bottom-3 right-3 grid size-9 place-items-center rounded-full bg-green-900/80 text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+                  aria-hidden="true"
+                >
+                  <Maximize2 size={16} stroke-width={2} />
+                </span>
+                <T t={{ es: `Ampliar captura: ${pantalla.es}`, en: `Enlarge screenshot: ${pantalla.en}` }} class="sr-only" />
+              </button>
+            ) : (
+              <BrowserFrame label={pantalla} shot={captura} viewport="aspect-[16/11]" />
+            )}
             <span class="mt-1 font-mono text-[13px] font-medium uppercase tracking-[.06em] text-warning-fg">
               <T t={{ es: `Paso ${i + 1}`, en: `Step ${i + 1}` }} />
             </span>
@@ -33,4 +74,20 @@ import T from "../ui/T.astro";
       }
     </ol>
   </div>
+
+  <!-- Visor: se cierra con Esc, con el botón o haciendo click afuera de la imagen. -->
+  <dialog
+    class="m-auto max-h-[92vh] max-w-[min(1400px,94vw)] overflow-visible bg-transparent p-0 backdrop:bg-green-900/85 backdrop:backdrop-blur-sm"
+    data-visor
+  >
+    <img src="" alt="" class="block h-auto max-h-[88vh] w-auto max-w-full rounded-lg shadow-pop" data-visor-img />
+    <button
+      type="button"
+      class="absolute -top-3 -right-3 grid size-10 cursor-pointer place-items-center rounded-full bg-surface text-fg-1 shadow-pop hover:bg-cream-tert focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
+      data-visor-cerrar
+    >
+      <X size={18} stroke-width={2} aria-hidden="true" />
+      <T t={{ es: "Cerrar", en: "Close" }} class="sr-only" />
+    </button>
+  </dialog>
 </section>
