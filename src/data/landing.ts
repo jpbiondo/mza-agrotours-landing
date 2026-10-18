@@ -315,17 +315,6 @@ export const stack: { capa: Txt; items: { nombre: Txt; tipo: Txt; desc: Txt; chi
   },
 ];
 
-/** Textos propios del diagrama de arquitectura; los nombres de cada pieza salen de `stack`. */
-export const arquitectura = {
-  usuario: t("Usuario", "User"),
-  navegador: t("Navegador", "Browser"),
-  titulo: t("Diagrama de arquitectura", "Architecture diagram"),
-  desc: t(
-    "El usuario usa la aplicación web en Next.js, que consume la API REST en Spring Boot. La API guarda los datos en PostgreSQL, usa Redis como caché y Amazon S3 para archivos, y se integra con Firebase, Mercado Pago, OpenWeather y Amazon SES. La aplicación web también usa Firebase y Google Maps.",
-    "The user works with the Next.js web app, which consumes the Spring Boot REST API. The API stores data in PostgreSQL, uses Redis as a cache and Amazon S3 for files, and integrates with Firebase, Mercado Pago, OpenWeather and Amazon SES. The web app also uses Firebase and Google Maps.",
-  ),
-};
-
 /** `github` es el usuario: de ahí salen el link al perfil y la foto (el avatar de GitHub). */
 export const equipo = [
   { nombre: "Hsin Yu Lin", github: "hsinyulin03", rol: t("Líder de proyecto · Backend", "Project lead · Backend") },

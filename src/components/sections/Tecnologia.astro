@@ -1,6 +1,5 @@
 ---
 import { stack } from "../../data/landing";
-import Arquitectura from "../Arquitectura.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 import T from "../ui/T.astro";
 ---
@@ -15,11 +14,6 @@ import T from "../ui/T.astro";
         en: "A web app on top of a REST API, with responsibilities split across frontend, backend, data and storage.",
       }}
     />
-
-    <!-- En mobile el diagrama no entra legible: quedan solo las tarjetas. -->
-    <figure class="reveal mt-12 hidden rounded-lg border border-outline-variant bg-surface p-6 desk:block">
-      <Arquitectura />
-    </figure>
 
     <div class="mt-12 flex flex-col gap-8">
       {
