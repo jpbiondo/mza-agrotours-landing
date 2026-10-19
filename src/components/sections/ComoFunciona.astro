@@ -59,27 +59,31 @@ const recorridos = await Promise.all(
         }
       </div>
 
-      <!-- En mobile (una columna) cada recorrido es una línea de tiempo: número y línea
-           a la izquierda, y el título arriba de su captura, así queda claro qué imagen
-           es de qué paso. Desde sm vuelve a la grilla con captura, "Paso N", título y texto. -->
+      <!-- Cada recorrido es una línea de tiempo: número en un círculo y una línea que
+           une los pasos, con el título arriba de su captura para que quede claro qué
+           imagen es de qué paso. Hasta desk es vertical (número a la izquierda); en desk,
+           horizontal (círculos en fila y el contenido debajo de cada uno). -->
       {
         recorridos.map(({ perfil, pasos }, r) => {
           const color = colorPerfil[perfil];
           return (
-            <ol class="mt-10 grid gap-x-6 sm:grid-cols-2 sm:gap-y-10 desk:grid-cols-4" data-recorrido={perfil} hidden={r !== 0}>
+            <ol class="mt-10 grid desk:grid-cols-4 desk:gap-x-6" data-recorrido={perfil} hidden={r !== 0}>
               {pasos.map(({ titulo, desc, pantalla, captura, grande }, i) => (
-                <li class="relative grid min-w-0 grid-cols-[34px_minmax(0,1fr)] gap-x-4 pb-10 last:pb-0 sm:block sm:pb-0">
+                <li class="relative grid min-w-0 grid-cols-[34px_minmax(0,1fr)] gap-x-4 pb-10 last:pb-0 desk:flex desk:flex-col desk:gap-4 desk:pb-0">
                   <span
-                    class:list={["grid size-8.5 place-items-center rounded-full font-mono text-sm font-semibold text-white sm:hidden", color.numero]}
+                    class:list={["grid size-8.5 shrink-0 place-items-center rounded-full font-mono text-sm font-semibold text-white", color.numero]}
                     aria-hidden="true"
                   >
                     {i + 1}
                   </span>
                   {i < pasos.length - 1 && (
-                    <span class:list={["absolute bottom-0 left-4 top-8.5 w-0.5 sm:hidden", color.linea]} aria-hidden="true" />
+                    <span class:list={["absolute bottom-0 left-4 top-8.5 w-0.5 desk:bottom-auto desk:left-[42px] desk:-right-4 desk:top-4 desk:h-0.5 desk:w-auto", color.linea]} aria-hidden="true" />
                   )}
-                  <div class="flex min-w-0 flex-col gap-3.5">
-                    <div class="order-2 sm:order-1">
+                  <div class="flex min-w-0 flex-col gap-3.5 sm:max-w-xl desk:max-w-none">
+                    <h3 class="pt-1 text-[19px] font-semibold desk:pt-0">
+                      <T t={titulo} />
+                    </h3>
+                    <div>
                       {grande ? (
                         <button
                           type="button"
@@ -108,13 +112,7 @@ const recorridos = await Promise.all(
                         <BrowserFrame label={pantalla} shot={captura} viewport="aspect-[16/11]" />
                       )}
                     </div>
-                    <span class="mt-1 hidden font-mono text-[13px] font-medium uppercase tracking-[.06em] text-warning-fg sm:order-2 sm:block">
-                      <T t={{ es: `Paso ${i + 1}`, en: `Step ${i + 1}` }} />
-                    </span>
-                    <h3 class="order-1 pt-1 text-[19px] font-semibold sm:order-3 sm:pt-0">
-                      <T t={titulo} />
-                    </h3>
-                    <p class="order-3 text-[14.5px] leading-normal text-fg-2 sm:order-4">
+                    <p class="text-[14.5px] leading-normal text-fg-2">
                       <T t={desc} />
                     </p>
                   </div>
