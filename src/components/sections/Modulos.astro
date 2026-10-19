@@ -22,27 +22,41 @@ const total = String(modulos.length).padStart(2, "0");
       }}
     />
 
-    <div
-      class="reveal mt-10 inline-flex flex-wrap gap-1 rounded-md border border-outline-variant bg-surface p-1"
-      role="tablist"
-      aria-label="Módulos"
-      data-tabs
-    >
-      {
-        modulos.map((m, i) => (
-          <button
-            type="button"
-            role="tab"
-            id={`tab-${i}`}
-            aria-controls={`modulo-${i}`}
-            aria-selected={i === 0 ? "true" : "false"}
-            tabindex={i === 0 ? 0 : -1}
-            class="cursor-pointer rounded-sm px-3.5 py-2 text-sm font-medium text-fg-2 transition-colors duration-150 ease-brand not-aria-selected:hover:bg-cream-tert aria-selected:bg-green-800 aria-selected:font-semibold aria-selected:text-white"
-          >
-            <T t={m.tab} />
-          </button>
-        ))
-      }
+    <!-- Una sola fila; si no entra (mobile), se desplaza de costado. Las sombras de
+         los bordes aparecen solo del lado donde hay más pestañas: el script marca
+         `data-izq` / `data-der` según la posición del scroll. -->
+    <div class="reveal group relative mt-10 w-fit max-w-full overflow-hidden rounded-md border border-outline-variant bg-surface" data-scroll-sombras>
+      <div
+        class="flex scrollbar-none gap-1 overflow-x-auto overscroll-x-contain p-1 [&::-webkit-scrollbar]:hidden"
+        role="tablist"
+        aria-label="Módulos"
+        data-tabs
+        data-scroll
+      >
+        {
+          modulos.map((m, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`tab-${i}`}
+              aria-controls={`modulo-${i}`}
+              aria-selected={i === 0 ? "true" : "false"}
+              tabindex={i === 0 ? 0 : -1}
+              class="shrink-0 cursor-pointer whitespace-nowrap rounded-sm px-3.5 py-2 text-sm font-medium text-fg-2 transition-colors duration-150 ease-brand not-aria-selected:hover:bg-cream-tert aria-selected:bg-green-800 aria-selected:font-semibold aria-selected:text-white"
+            >
+              <T t={m.tab} />
+            </button>
+          ))
+        }
+      </div>
+      <span
+        class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-linear-to-r from-fg-1/12 to-transparent opacity-0 transition-opacity duration-200 group-data-izq:opacity-100"
+        aria-hidden="true"
+      ></span>
+      <span
+        class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-fg-1/12 to-transparent opacity-0 transition-opacity duration-200 group-data-der:opacity-100"
+        aria-hidden="true"
+      ></span>
     </div>
 
     {

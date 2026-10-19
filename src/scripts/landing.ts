@@ -59,6 +59,8 @@ if (tablist) {
       t.tabIndex = j === i ? 0 : -1;
     });
     if (foco) tabs[i].focus();
+    // En mobile la fila se desplaza: la pestaña elegida queda a la vista.
+    tabs[i].scrollIntoView({ block: "nearest", inline: "nearest" });
     actual = i;
     window.clearTimeout(timer);
 
@@ -94,6 +96,23 @@ if (tablist) {
     if (e.key === "End") mostrar(tabs.length - 1, true);
   });
 }
+
+/* ---- Sombras de las filas que se desplazan de costado ------------------ */
+
+// Marca en el contenedor de qué lado queda contenido oculto (`data-izq`,
+// `data-der`); las sombras se muestran con eso. Si todo entra, no hay ninguna.
+document.querySelectorAll<HTMLElement>("[data-scroll-sombras]").forEach((caja) => {
+  const fila = caja.querySelector<HTMLElement>("[data-scroll]");
+  if (!fila) return;
+  const actualizar = () => {
+    const resto = fila.scrollWidth - fila.clientWidth - fila.scrollLeft;
+    caja.toggleAttribute("data-izq", fila.scrollLeft > 1);
+    caja.toggleAttribute("data-der", resto > 1);
+  };
+  fila.addEventListener("scroll", actualizar, { passive: true });
+  new ResizeObserver(actualizar).observe(fila);
+  actualizar();
+});
 
 /* ---- Recorrido del problema por perfil --------------------------------- */
 
