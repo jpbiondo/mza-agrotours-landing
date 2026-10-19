@@ -356,8 +356,8 @@ export const stack: { capa: Txt; items: { nombre: Txt; tipo: Txt; desc: Txt; chi
 
 /** `github` es el usuario: de ahí salen el link al perfil y la foto (el avatar de GitHub). */
 export const equipo = [
-  { nombre: "Hsin Yu Lin", github: "hsinyulin03", rol: t("Líder de proyecto · Backend", "Project lead · Backend") },
-  { nombre: "Juan Pablo Biondo", github: "jpbiondo", rol: t("Líder técnico · Frontend · UX/UI", "Tech lead · Frontend · UX/UI") },
-  { nombre: "Leandro López", github: "L-LopezMartin", rol: t("Frontend · UX/UI", "Frontend · UX/UI") },
-  { nombre: "Lucila Oberti", github: "lucilaoberti", rol: t("Backend", "Backend") },
+  { nombre: "Hsin Yu Lin", github: "hsinyulin03", rol: t("Líder de proyecto · Analista Funcional · Backend", "Project lead · Functional Analyst · Backend") },
+  { nombre: "Juan Pablo Biondo", github: "jpbiondo", rol: t("Líder técnico · Analista Funcional · Frontend · UX/UI", "Functional Analyst · Tech lead · Frontend · UX/UI") },
+  { nombre: "Leandro López", github: "L-LopezMartin", rol: t("Analista Funcional · Frontend  · UX/UI", "Functional Analyst · Frontend · UX/UI") },
+  { nombre: "Lucila Oberti", github: "lucilaoberti", rol: t(" Analista Funcional · Backend ", "Functional Analyst · Backend") },
 ];
