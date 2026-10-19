@@ -19,19 +19,19 @@ export const nav = [
   { id: "equipo", label: t("Equipo", "Team") },
 ];
 
+export type Perfil = "visitante" | "productor";
+
 /**
- * El problema contado por perfil: cómo se resuelve hoy (mensajes sueltos) y
- * cómo con la plataforma (pasos). Los mensajes son ejemplos verosímiles, no
- * citas reales. `perfil` define el color (ver Proyecto.astro).
+ * El problema contado por perfil: cómo se resuelve hoy, con mensajes sueltos.
+ * Los mensajes son ejemplos verosímiles, no citas reales. La solución, paso a
+ * paso, está en `comoFunciona`. `perfil` define el color (ver lib/perfiles.ts).
  */
 export const recorridos: {
-  perfil: "visitante" | "productor";
+  perfil: Perfil;
   nombre: Txt;
   hoy: Txt;
   /** `respuesta`: mensaje del otro lado (se alinea a la derecha). `alerta`: cómo termina mal. */
   mensajes: { canal: Txt; texto: Txt; respuesta?: boolean; alerta?: boolean }[];
-  con: Txt;
-  pasos: { titulo: Txt; desc: Txt; via: Txt }[];
 }[] = [
   {
     perfil: "visitante",
@@ -43,13 +43,6 @@ export const recorridos: {
       { canal: t("WhatsApp", "WhatsApp"), texto: t("¿Tienen lugar el sábado para 2 adultos y 2 chicos? ¿Cuánto sale?", "Any room on Saturday for 2 adults and 2 kids? How much is it?") },
       { canal: t("WhatsApp", "WhatsApp"), texto: t("Te paso el CBU, mandame el comprobante", "Here are the bank details, send me the receipt"), respuesta: true },
       { canal: t("Sábado, 9:40", "Saturday, 9:40"), texto: t("¿Dónde queda exactamente? Y si llueve, ¿se suspende?", "Where exactly is it? And if it rains, is it called off?"), alerta: true },
-    ],
-    con: t("Lo mismo, en un solo lugar y sin esperar respuesta.", "The same, in one place and without waiting for a reply."),
-    pasos: [
-      { titulo: t("Encontrás la actividad", "Find the activity"), desc: t("Filtrás por cultivo y departamento.", "Filter by crop and department."), via: t("Catálogo", "Catalog") },
-      { titulo: t("Ves cupos y precio al instante", "See availability and price instantly"), desc: t("Tarifas por rango de edad y cupos por fecha.", "Age-based rates and per-date capacity."), via: t("Reserva online", "Online booking") },
-      { titulo: t("Pagás", "Pay"), desc: t("La reserva se confirma sola cuando entra el pago.", "The booking confirms itself once the payment goes through."), via: t("Mercado Pago", "Mercado Pago") },
-      { titulo: t("Llegás preparado", "Arrive prepared"), desc: t("Confirmación por correo, ubicación y pronóstico del día.", "Email confirmation, location and the day’s forecast."), via: t("Correo, mapa y clima", "Email, map and weather") },
     ],
   },
   {
@@ -63,50 +56,89 @@ export const recorridos: {
       { canal: t("Llamadas perdidas", "Missed calls"), texto: t("3 llamadas mientras estabas en la viña", "3 calls while you were out in the vineyard"), respuesta: true },
       { canal: t("Sábado, 10:00", "Saturday, 10:00"), texto: t("Llegaron 14 personas para un cupo de 12", "14 people showed up for 12 spots"), alerta: true },
     ],
-    con: t("Las reservas llegan ordenadas y ya pagas.", "Bookings arrive organized and already paid."),
-    pasos: [
-      { titulo: t("Publicás la actividad", "Publish the activity"), desc: t("Fotos, duración, qué incluye y tarifas por edad.", "Photos, duration, what’s included and age-based rates."), via: t("Panel del establecimiento", "Farm dashboard") },
-      { titulo: t("Definís cupos por fecha", "Set capacity per date"), desc: t("No se venden más lugares de los que hay.", "No more spots are sold than there are."), via: t("Calendario de actividad", "Activity calendar") },
-      { titulo: t("Cobrás", "Get paid"), desc: t("Con tu cuenta de Mercado Pago vinculada.", "Through your linked Mercado Pago account."), via: t("Mercado Pago", "Mercado Pago") },
-      { titulo: t("Respondés en un solo lugar", "Answer in one place"), desc: t("Chat por actividad, sin repartir mensajes entre apps.", "Chat per activity, no messages scattered across apps."), via: t("Chats", "Chats") },
-    ],
   },
 ];
 
-/** Recorrido del visitante, una captura por paso (ver `captura` en `modulos`). */
-export const comoFunciona = [
+/**
+ * La solución, paso a paso y por perfil, con una captura por paso (ver
+ * `captura` en `modulos`). El orden de los perfiles es el del selector.
+ */
+export const comoFunciona: {
+  perfil: Perfil;
+  nombre: Txt;
+  pasos: { titulo: Txt; desc: Txt; pantalla: Txt; captura: string }[];
+}[] = [
   {
-    titulo: t("Explorá", "Explore"),
-    desc: t("Actividades de todas las fincas, con filtros por cultivo y departamento.", "Activities from every farm, filtered by crop and department."),
-    pantalla: t("Explorar actividades", "Explore activities"),
-    captura: "explorar-actividades",
+    perfil: "visitante",
+    nombre: t("Visitante", "Visitor"),
+    pasos: [
+      {
+        titulo: t("Explorá", "Explore"),
+        desc: t("Actividades de todas las fincas, con filtros por cultivo y departamento.", "Activities from every farm, filtered by crop and department."),
+        pantalla: t("Explorar actividades", "Explore activities"),
+        captura: "explorar-actividades",
+      },
+      {
+        titulo: t("Reservá", "Book"),
+        desc: t(
+          "Elegís fecha y participantes, y la tarifa por edad se calcula al momento.",
+          "Pick a date and participants, and age-based rates are worked out on the spot.",
+        ),
+        pantalla: t("Solicitar reserva", "Book an activity"),
+        captura: "solicitar-reserva",
+      },
+      {
+        titulo: t("Pagá", "Pay"),
+        desc: t(
+          "Con Mercado Pago. La reserva se confirma cuando entra el pago.",
+          "With Mercado Pago. The booking is confirmed once the payment goes through.",
+        ),
+        pantalla: t("Pagar reserva", "Pay for the booking"),
+        captura: "pagar-reserva",
+      },
+      {
+        titulo: t("Llegá preparado", "Arrive prepared"),
+        desc: t(
+          "En tu reserva tenés la ubicación de la finca y el pronóstico del día.",
+          "Your booking shows the farm’s location and the day’s forecast.",
+        ),
+        pantalla: t("Detalle de reserva", "Booking details"),
+        captura: "detalle-de-reserva",
+      },
+    ],
   },
   {
-    titulo: t("Reservá", "Book"),
-    desc: t(
-      "Elegís fecha y participantes, y la tarifa por edad se calcula al momento.",
-      "Pick a date and participants, and age-based rates are worked out on the spot.",
-    ),
-    pantalla: t("Solicitar reserva", "Book an activity"),
-    captura: "solicitar-reserva",
-  },
-  {
-    titulo: t("Pagá", "Pay"),
-    desc: t(
-      "Con Mercado Pago. La reserva se confirma cuando entra el pago.",
-      "With Mercado Pago. The booking is confirmed once the payment goes through.",
-    ),
-    pantalla: t("Pagar reserva", "Pay for the booking"),
-    captura: "pagar-reserva",
-  },
-  {
-    titulo: t("Llegá preparado", "Arrive prepared"),
-    desc: t(
-      "En tu reserva tenés la ubicación de la finca y el pronóstico del día.",
-      "Your booking shows the farm’s location and the day’s forecast.",
-    ),
-    pantalla: t("Detalle de reserva", "Booking details"),
-    captura: "detalle-de-reserva",
+    perfil: "productor",
+    nombre: t("Productor", "Producer"),
+    pasos: [
+      {
+        titulo: t("Publicá la actividad", "Publish the activity"),
+        desc: t("Fotos, duración, qué incluye y tarifas por edad.", "Photos, duration, what’s included and age-based rates."),
+        pantalla: t("Crear actividad", "Create activity"),
+        captura: "crear-actividad",
+      },
+      {
+        titulo: t("Definí cupos por fecha", "Set capacity per date"),
+        desc: t("No se venden más lugares de los que hay.", "No more spots are sold than there are."),
+        pantalla: t("Calendario de actividad", "Activity calendar"),
+        captura: "calendario-de-actividad",
+      },
+      {
+        titulo: t("Cobrá", "Get paid"),
+        desc: t(
+          "Con tu cuenta de Mercado Pago vinculada, las reservas llegan ya pagas.",
+          "With your Mercado Pago account linked, bookings arrive already paid.",
+        ),
+        pantalla: t("Cobros", "Payouts"),
+        captura: "cobros",
+      },
+      {
+        titulo: t("Respondé en un solo lugar", "Answer in one place"),
+        desc: t("Chat por actividad, sin repartir mensajes entre apps.", "Chat per activity, no messages scattered across apps."),
+        pantalla: t("Chats", "Chats"),
+        captura: "chats",
+      },
+    ],
   },
 ];
 

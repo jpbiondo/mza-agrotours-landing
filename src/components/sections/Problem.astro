@@ -1,30 +1,12 @@
 ---
 import { recorridos } from "../../data/landing";
+import { colorPerfil } from "../../lib/perfiles";
+import Pill from "../ui/Pill.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 import T from "../ui/T.astro";
 
-// Color por perfil: verde el visitante, marrón el productor. Es el mismo
-// código que usan Alcance y Cómo funciona.
-const colores = {
-  visitante: {
-    boton: "aria-pressed:bg-green-800",
-    punto: "bg-green-800",
-    panel: "border-green-800 bg-green-050",
-    titulo: "text-green-800",
-    numero: "bg-green-800",
-    linea: "bg-green-800/25",
-    via: "bg-green-100 text-green-800",
-  },
-  productor: {
-    boton: "aria-pressed:bg-brown-700",
-    punto: "bg-brown-700",
-    panel: "border-brown-700 bg-surface",
-    titulo: "text-brown-700",
-    numero: "bg-brown-700",
-    linea: "bg-brown-700/25",
-    via: "bg-brown-100 text-brown-800",
-  },
-};
+// Solo el problema: cómo se resuelve hoy, un panel por perfil. La solución,
+// paso a paso, está en Cómo funciona (la sección siguiente).
 
 // En desktop los mensajes se tuercen y se corren un poco: el desorden es la idea.
 const desorden = [
@@ -47,93 +29,46 @@ const desorden = [
       }}
     />
 
-    <!-- `reveal` va en el contenedor y no en cada recorrido: uno arranca oculto y, si
-         tuviera su propio `reveal`, al mostrarlo quedaría transparente. -->
-    <div class="reveal mt-8">
-      <span id="recorrido-label" class="sr-only"><T t={{ es: "Ver el recorrido de", en: "Show the journey of" }} /></span>
-      <div class="inline-flex gap-1 rounded-pill border border-brown-200 bg-surface p-1" role="group" aria-labelledby="recorrido-label">
-        {
-          recorridos.map(({ perfil, nombre }, i) => (
-            <button
-              type="button"
-              aria-pressed={i === 0 ? "true" : "false"}
-              data-recorrido-boton={perfil}
-              class:list={[
-                "group inline-flex cursor-pointer items-center gap-2 rounded-pill px-4 py-2 text-sm font-medium text-fg-2 transition-colors duration-200 ease-brand aria-pressed:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warning",
-                colores[perfil].boton,
-              ]}
-            >
-              <i class:list={["size-2 rounded-full group-aria-pressed:bg-white", colores[perfil].punto]} aria-hidden="true" />
-              <T t={nombre} />
-            </button>
-          ))
-        }
-      </div>
-
+    <div class="mt-10 grid gap-5 desk:grid-cols-2 desk:gap-7">
       {
-        recorridos.map(({ perfil, hoy, mensajes, con, pasos }, i) => {
-          const c = colores[perfil];
-          return (
-            <div class="mt-7 grid gap-5 desk:grid-cols-2 desk:gap-7" data-recorrido={perfil} hidden={i !== 0}>
-              <div class="min-w-0 rounded-lg border border-brown-200 bg-cream-bg p-6 sm:p-7">
-                <h3 class="text-xl font-semibold">
-                  <T t={{ es: "Hoy", en: "Today" }} />
-                </h3>
-                <p class="mt-1 text-sm text-fg-2">
-                  <T t={hoy} />
-                </p>
-                <div class="mt-6 flex flex-col gap-3">
-                  {mensajes.map(({ canal, texto, respuesta, alerta }, j) => (
-                    <div
-                      class:list={[
-                        "max-w-[88%] rounded-[14px] border px-3.5 py-2.5 text-[14.5px] leading-snug shadow-[0_2px_6px_rgba(92,59,34,.06)] desk:max-w-[78%]",
-                        respuesta ? "self-end rounded-br-[4px]" : "self-start rounded-bl-[4px]",
-                        alerta
-                          ? "border-danger/30 bg-danger-fill"
-                          : respuesta
-                            ? "border-brown-200 bg-brown-100"
-                            : "border-outline-variant bg-surface",
-                        desorden[j % desorden.length],
-                      ]}
-                    >
-                      <T t={canal} class="mb-0.5 block font-mono text-[11px] font-medium uppercase tracking-[.06em] text-fg-3" />
-                      <T t={texto} />
-                    </div>
-                  ))}
+        recorridos.map(({ perfil, nombre, hoy, mensajes }) => (
+          <div class="reveal min-w-0 rounded-lg border border-brown-200 bg-cream-bg p-6 sm:p-7">
+            <Pill tone={colorPerfil[perfil].pill}>
+              <T t={nombre} />
+            </Pill>
+            <p class="mt-3 text-[15px] text-fg-2">
+              <T t={hoy} />
+            </p>
+            <div class="mt-6 flex flex-col gap-3">
+              {mensajes.map(({ canal, texto, respuesta, alerta }, j) => (
+                <div
+                  class:list={[
+                    "max-w-[88%] rounded-[14px] border px-3.5 py-2.5 text-[14.5px] leading-snug shadow-[0_2px_6px_rgba(92,59,34,.06)] desk:max-w-[78%]",
+                    respuesta ? "self-end rounded-br-[4px]" : "self-start rounded-bl-[4px]",
+                    alerta
+                      ? "border-danger/30 bg-danger-fill"
+                      : respuesta
+                        ? "border-brown-200 bg-brown-100"
+                        : "border-outline-variant bg-surface",
+                    desorden[j % desorden.length],
+                  ]}
+                >
+                  <T t={canal} class="mb-0.5 block font-mono text-[11px] font-medium uppercase tracking-[.06em] text-fg-3" />
+                  <T t={texto} />
                 </div>
-              </div>
-
-              <div class:list={["min-w-0 rounded-lg border-[1.5px] p-6 sm:p-7", c.panel]}>
-                <h3 class:list={["text-xl font-semibold", c.titulo]}>
-                  <T t={{ es: "Con Mendoza AgroTours", en: "With Mendoza AgroTours" }} />
-                </h3>
-                <p class="mt-1 text-sm text-fg-2">
-                  <T t={con} />
-                </p>
-                <ol class="mt-6">
-                  {pasos.map(({ titulo, desc, via }, j) => (
-                    <li class="relative grid grid-cols-[34px_1fr] gap-3.5 pb-6 last:pb-0">
-                      {j < pasos.length - 1 && <span class:list={["absolute bottom-0 left-4 top-[34px] w-0.5", c.linea]} aria-hidden="true" />}
-                      <span class:list={["grid size-[34px] place-items-center rounded-full font-mono text-sm font-semibold text-white", c.numero]}>
-                        {j + 1}
-                      </span>
-                      <div class="pt-1.5">
-                        <b class="block text-[15.5px] font-semibold">
-                          <T t={titulo} />
-                        </b>
-                        <p class="text-sm text-fg-2">
-                          <T t={desc} />
-                        </p>
-                        <T t={via} class:list={["mt-1.5 inline-block rounded-sm px-2 py-0.5 font-mono text-[11.5px] font-medium", c.via]} />
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </div>
+              ))}
             </div>
-          );
-        })
+          </div>
+        ))
       }
     </div>
+
+    <a
+      href="#como-funciona"
+      class="reveal mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-green-800 no-underline hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
+    >
+      <T t={{ es: "Cómo lo resolvemos", en: "How we solve it" }} />
+      <span aria-hidden="true">↓</span>
+    </a>
   </div>
 </section>

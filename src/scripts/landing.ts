@@ -1,6 +1,6 @@
-// Interacción de la landing: idioma, pestañas de módulos, recorrido del
-// problema por perfil, aparición al hacer scroll, link activo de la navbar y
-// menú mobile. Todo opera sobre HTML ya renderizado por Astro.
+// Interacción de la landing: idioma, pestañas de módulos, selector de perfil
+// de Cómo funciona, visor de capturas, aparición al hacer scroll, link activo
+// de la navbar y menú mobile. Todo opera sobre HTML ya renderizado por Astro.
 
 type Lang = "es" | "en";
 const CLAVE_IDIOMA = "mat-landing-lang";
@@ -114,7 +114,7 @@ document.querySelectorAll<HTMLElement>("[data-scroll-sombras]").forEach((caja) =
   actualizar();
 });
 
-/* ---- Recorrido del problema por perfil --------------------------------- */
+/* ---- Selector de perfil (Cómo funciona) ------------------------------- */
 
 const botonesRecorrido = [...document.querySelectorAll<HTMLButtonElement>("[data-recorrido-boton]")];
 botonesRecorrido.forEach((b) => {
