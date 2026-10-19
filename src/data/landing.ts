@@ -232,7 +232,6 @@ export const alcance = [
     tono: "success",
     icono: "backpack",
     items: [
-      [t("Registro y cuenta", "Sign-up and account"), t("Alta con datos personales, inicio de sesión y baja de cuenta.", "Sign-up with personal details, login and account deletion.")],
       [t("Exploración", "Explore"), t("Catálogo filtrable y detalle de actividad con la ubicación de la finca.", "Filterable catalog and activity details with the farm’s location.")],
       [t("Reservas y pagos", "Bookings and payments"), t("Solicitud con cupos y tarifas por edad, pago online.", "Requests with capacity and age-based rates, online payment.")],
       [t("Mis reservas", "My bookings"), t("Reprogramación, cancelación y seguimiento de reembolsos.", "Rescheduling, cancellation and refund tracking.")],
