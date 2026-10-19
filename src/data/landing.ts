@@ -21,41 +21,58 @@ export const nav = [
 
 export type Perfil = "visitante" | "productor";
 
+/** App de cada notificación: define el ícono y el color (ver Problem.astro). */
+export type App = "instagram" | "whatsapp" | "banco" | "clima" | "telefono" | "notas";
+
 /**
- * El problema contado por perfil: cómo se resuelve hoy, con mensajes sueltos.
- * Los mensajes son ejemplos verosímiles, no citas reales. La solución, paso a
- * paso, está en `comoFunciona`. `perfil` define el color (ver lib/perfiles.ts).
+ * El problema contado por perfil: la pantalla de bloqueo del celular llena de
+ * avisos de distintas apps, que llegan a la vez (no es una conversación). El
+ * desenlace va aparte, en `resultado`. Son ejemplos verosímiles, no casos
+ * reales. La solución, paso a paso, está en `comoFunciona`. `perfil` define
+ * el color (ver lib/perfiles.ts).
  */
 export const recorridos: {
   perfil: Perfil;
   nombre: Txt;
   hoy: Txt;
-  /** `respuesta`: mensaje del otro lado (se alinea a la derecha). `alerta`: cómo termina mal. */
-  mensajes: { canal: Txt; texto: Txt; respuesta?: boolean; alerta?: boolean }[];
+  hora: string;
+  fecha: Txt;
+  /** `contador`: mensajes sin leer de esa app. */
+  notificaciones: { app: App; cuando: Txt; texto: Txt; contador?: number }[];
+  resultado: Txt;
 }[] = [
   {
     perfil: "visitante",
     nombre: t("Visitante", "Visitor"),
     hoy: t("Querés hacer una cosecha con tu familia el sábado.", "You want to join a harvest with your family on Saturday."),
-    mensajes: [
-      { canal: t("Instagram", "Instagram"), texto: t("Vi el post de una finca en Luján. ¿Hacen visitas?", "Saw a post from a farm in Luján. Do you take visitors?") },
-      { canal: t("WhatsApp · 2 días después", "WhatsApp · 2 days later"), texto: t("Sí, escribinos al WhatsApp", "Yes, text us on WhatsApp"), respuesta: true },
-      { canal: t("WhatsApp", "WhatsApp"), texto: t("¿Tienen lugar el sábado para 2 adultos y 2 chicos? ¿Cuánto sale?", "Any room on Saturday for 2 adults and 2 kids? How much is it?") },
-      { canal: t("WhatsApp", "WhatsApp"), texto: t("Te paso el CBU, mandame el comprobante", "Here are the bank details, send me the receipt"), respuesta: true },
-      { canal: t("Sábado, 9:40", "Saturday, 9:40"), texto: t("¿Dónde queda exactamente? Y si llueve, ¿se suspende?", "Where exactly is it? And if it rains, is it called off?"), alerta: true },
+    hora: "9:40",
+    fecha: t("sábado 18 de octubre", "Saturday, October 18"),
+    notificaciones: [
+      { app: "instagram", cuando: t("hace 2 días", "2 days ago"), texto: t("finca.lujan: Sí, escribinos al WhatsApp", "finca.lujan: Yes, text us on WhatsApp") },
+      { app: "whatsapp", cuando: t("jueves", "Thursday"), texto: t("Finca Luján: Te paso el CBU, mandame el comprobante", "Finca Luján: Here are the bank details, send me the receipt") },
+      { app: "banco", cuando: t("jueves", "Thursday"), texto: t("Transferencia enviada: $24.000. Sin confirmación de la finca.", "Transfer sent: $24,000. No confirmation from the farm.") },
+      { app: "clima", cuando: t("ahora", "now"), texto: t("Luján de Cuyo: 70% de probabilidad de lluvia hoy.", "Luján de Cuyo: 70% chance of rain today.") },
+      { app: "whatsapp", cuando: t("ahora", "now"), texto: t("Vos: ¿Dónde queda exactamente? ¿Se suspende si llueve?", "You: Where exactly is it? Is it off if it rains?") },
     ],
+    resultado: t(
+      "Salís sin saber bien dónde es ni si la actividad se hace.",
+      "You head out without knowing exactly where it is or whether it’s on.",
+    ),
   },
   {
     perfil: "productor",
     nombre: t("Productor", "Producer"),
     hoy: t("Abrís la finca a visitas los fines de semana de cosecha.", "You open the farm to visitors on harvest weekends."),
-    mensajes: [
-      { canal: t("Instagram · 23:10", "Instagram · 23:10"), texto: t("Hola! ¿Hay lugar este finde?", "Hi! Any room this weekend?") },
-      { canal: t("Cuaderno", "Notebook"), texto: t("Sáb: Gómez ×4, Ruiz ×2, ¿Paula? ×3", "Sat: Gómez ×4, Ruiz ×2, Paula? ×3"), respuesta: true },
-      { canal: t("WhatsApp", "WhatsApp"), texto: t("Ya transferí, ¿me confirmás?", "I’ve sent the transfer, can you confirm?") },
-      { canal: t("Llamadas perdidas", "Missed calls"), texto: t("3 llamadas mientras estabas en la viña", "3 calls while you were out in the vineyard"), respuesta: true },
-      { canal: t("Sábado, 10:00", "Saturday, 10:00"), texto: t("Llegaron 14 personas para un cupo de 12", "14 people showed up for 12 spots"), alerta: true },
+    hora: "10:00",
+    fecha: t("sábado 18 de octubre", "Saturday, October 18"),
+    notificaciones: [
+      { app: "instagram", cuando: t("23:10", "11:10 PM"), texto: t("Hola! ¿Hay lugar este finde?", "Hi! Any room this weekend?"), contador: 6 },
+      { app: "whatsapp", cuando: t("ayer", "yesterday"), texto: t("Ya transferí, ¿me confirmás?", "I’ve sent the transfer, can you confirm?"), contador: 4 },
+      { app: "telefono", cuando: t("9:12", "9:12 AM"), texto: t("3 llamadas perdidas mientras estabas en la viña", "3 missed calls while you were out in the vineyard") },
+      { app: "banco", cuando: t("ayer", "yesterday"), texto: t("Recibiste $12.000. Concepto: “finde”", "You received $12,000. Reference: “weekend”") },
+      { app: "notas", cuando: t("viernes", "Friday"), texto: t("Sáb: Gómez ×4, Ruiz ×2, ¿Paula? ×3", "Sat: Gómez ×4, Ruiz ×2, Paula? ×3") },
     ],
+    resultado: t("Llegaron 14 personas para 12 lugares.", "14 people showed up for 12 spots."),
   },
 ];
 

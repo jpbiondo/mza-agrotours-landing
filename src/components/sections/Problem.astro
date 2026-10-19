@@ -1,21 +1,47 @@
 ---
-import { recorridos } from "../../data/landing";
+import { Camera, CloudRain, Landmark, MessageCircle, NotebookPen, PhoneMissed, TriangleAlert } from "@lucide/astro";
+
+import { recorridos, type App, type Txt } from "../../data/landing";
 import { colorPerfil } from "../../lib/perfiles";
 import Pill from "../ui/Pill.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 import T from "../ui/T.astro";
 
-// Solo el problema: cómo se resuelve hoy, un panel por perfil. La solución,
-// paso a paso, está en Cómo funciona (la sección siguiente).
+// Solo el problema: cómo se resuelve hoy, un celular por perfil con la pantalla
+// de bloqueo llena de avisos que llegan a la vez. El desenlace va aparte, debajo.
+// La solución, paso a paso, está en la sección siguiente.
 
-// En desktop los mensajes se tuercen y se corren un poco: el desorden es la idea.
-const desorden = [
-  "desk:-rotate-2",
-  "desk:-translate-x-3 desk:rotate-[1.5deg]",
-  "desk:translate-x-6 desk:rotate-1",
-  "desk:-rotate-[1.5deg]",
-  "desk:translate-x-2 desk:-rotate-[.5deg]",
-];
+const apps: Record<App, { nombre: Txt; Icon: typeof Camera; color: string }> = {
+  instagram: { nombre: { es: "Instagram", en: "Instagram" }, Icon: Camera, color: "bg-danger" },
+  whatsapp: { nombre: { es: "WhatsApp", en: "WhatsApp" }, Icon: MessageCircle, color: "bg-success" },
+  banco: { nombre: { es: "Banco", en: "Bank" }, Icon: Landmark, color: "bg-brown-700" },
+  clima: { nombre: { es: "Clima", en: "Weather" }, Icon: CloudRain, color: "bg-warning" },
+  telefono: { nombre: { es: "Teléfono", en: "Phone" }, Icon: PhoneMissed, color: "bg-info" },
+  notas: { nombre: { es: "Notas", en: "Notes" }, Icon: NotebookPen, color: "bg-fg-3" },
+};
+
+// Los dos celulares miden lo mismo (ancho máximo y proporción) pero son de
+// distinto modelo: el del visitante, más redondeado, con "isla" arriba y fondo
+// de viña a la hora dorada; el del productor, de esquinas más rectas, con una
+// cámara chica y fondo de tierra.
+const telefonos = {
+  visitante: {
+    marco: "rounded-[44px] bg-green-900 p-2.5",
+    pantalla: "rounded-[36px] bg-linear-to-b from-green-700 via-green-800 to-green-900",
+    brillo: "bg-radial-[at_85%_0%] from-warning/45 to-transparent to-60%",
+    camara: "h-6 w-24 rounded-pill bg-green-900",
+    notif: "rounded-2xl",
+    icono: "rounded-lg",
+  },
+  productor: {
+    marco: "rounded-[22px] bg-brown-800 p-2",
+    pantalla: "rounded-[15px] bg-linear-to-b from-brown-500 via-brown-700 to-brown-800",
+    brillo: "bg-radial-[at_15%_0%] from-cream-bg/25 to-transparent to-60%",
+    camara: "size-3.5 rounded-full bg-brown-800",
+    notif: "rounded-md",
+    icono: "rounded-full",
+  },
+};
 ---
 
 <section id="problema" class="bg-brown-100 py-20 sm:py-28" data-screen-label="Problema">
@@ -29,43 +55,74 @@ const desorden = [
       }}
     />
 
-    <div class="mt-10 grid gap-5 desk:grid-cols-2 desk:gap-7">
+    <div class="mt-12 grid gap-14 desk:grid-cols-2 desk:gap-8">
       {
-        recorridos.map(({ perfil, nombre, hoy, mensajes }) => (
-          <div class="reveal min-w-0 rounded-lg border border-brown-200 bg-cream-bg p-6 sm:p-7">
-            <Pill tone={colorPerfil[perfil].pill}>
-              <T t={nombre} />
-            </Pill>
-            <p class="mt-3 text-[15px] text-fg-2">
-              <T t={hoy} />
-            </p>
-            <div class="mt-6 flex flex-col gap-3">
-              {mensajes.map(({ canal, texto, respuesta, alerta }, j) => (
-                <div
-                  class:list={[
-                    "max-w-[88%] rounded-[14px] border px-3.5 py-2.5 text-[14.5px] leading-snug shadow-[0_2px_6px_rgba(92,59,34,.06)] desk:max-w-[78%]",
-                    respuesta ? "self-end rounded-br-[4px]" : "self-start rounded-bl-[4px]",
-                    alerta
-                      ? "border-danger/30 bg-danger-fill"
-                      : respuesta
-                        ? "border-brown-200 bg-brown-100"
-                        : "border-outline-variant bg-surface",
-                    desorden[j % desorden.length],
-                  ]}
-                >
-                  <T t={canal} class="mb-0.5 block font-mono text-[11px] font-medium uppercase tracking-[.06em] text-fg-3" />
-                  <T t={texto} />
+        recorridos.map(({ perfil, nombre, hoy, hora, fecha, notificaciones, resultado }) => {
+          const tel = telefonos[perfil];
+          return (
+            <div class="reveal flex min-w-0 flex-col gap-5">
+              <div>
+                <Pill tone={colorPerfil[perfil].pill}>
+                  <T t={nombre} />
+                </Pill>
+                <p class="mt-3 text-[15px] text-fg-2">
+                  <T t={hoy} />
+                </p>
+              </div>
+
+              <div class:list={["aspect-[9/18.5] w-full max-w-75 self-center shadow-[0_18px_40px_rgba(14,46,12,.25)]", tel.marco]}>
+                <div class:list={["relative flex h-full flex-col overflow-hidden px-3 pb-5 pt-2.5", tel.pantalla]}>
+                  <span class:list={["pointer-events-none absolute inset-0", tel.brillo]} aria-hidden="true" />
+                  <span class:list={["relative mx-auto", tel.camara]} aria-hidden="true" />
+                  <p class="relative mt-4 shrink-0 text-center text-[56px] font-semibold leading-none tracking-tight text-white tabular-nums">{hora}</p>
+                  <p class="relative mt-1.5 shrink-0 text-center text-sm text-white/85">
+                    <T t={fecha} />
+                  </p>
+                  <ul class="relative mt-5 flex flex-col gap-2">
+                    {notificaciones.map(({ app, cuando, texto, contador }) => {
+                      const { nombre: nombreApp, Icon, color } = apps[app];
+                      return (
+                        <li class:list={["grid grid-cols-[30px_minmax(0,1fr)] gap-2.5 bg-cream-bg/85 px-3 py-2.5 text-[13px] leading-snug text-fg-1 backdrop-blur-md", tel.notif]}>
+                          <span class:list={["grid size-7.5 place-items-center text-white", color, tel.icono]} aria-hidden="true">
+                            <Icon size={16} stroke-width={2} />
+                          </span>
+                          <div class="min-w-0">
+                            <div class="flex items-baseline justify-between gap-2 text-[11.5px] text-fg-3">
+                              <b class="flex items-center gap-1.5 font-semibold text-fg-1">
+                                <T t={nombreApp} />
+                                {contador && (
+                                  <span class="rounded-pill bg-danger px-1.5 font-mono text-[10.5px] leading-4 text-white">{contador}</span>
+                                )}
+                              </b>
+                              <T t={cuando} class="shrink-0" />
+                            </div>
+                            <T t={texto} />
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
-              ))}
+              </div>
+
+              <p class="flex gap-2.5 rounded-xl border border-danger/25 bg-danger-fill px-4 py-3.5 text-[15px] leading-snug text-danger-fg">
+                <TriangleAlert size={20} stroke-width={1.75} class="mt-px shrink-0" aria-hidden="true" />
+                <span>
+                  <b class="font-semibold">
+                    <T t={{ es: "Resultado:", en: "Result:" }} />
+                  </b>{" "}
+                  <T t={resultado} />
+                </span>
+              </p>
             </div>
-          </div>
-        ))
+          );
+        })
       }
     </div>
 
     <a
       href="#solucion"
-      class="reveal mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-green-800 no-underline hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
+      class="reveal mt-10 inline-flex items-center gap-2 text-[15px] font-semibold text-green-800 no-underline hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
     >
       <T t={{ es: "Cómo lo resolvemos", en: "How we solve it" }} />
       <span aria-hidden="true">↓</span>
