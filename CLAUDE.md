@@ -43,7 +43,8 @@ Se buscan por nombre de archivo (sin extensión), en png/jpg/webp. Si falta, se 
 Se copia desde `../mza-agrotours-frontend`, no se importa (no hay dependencia entre repos):
 
 - Tokens del `@theme` de `src/app/globals.css` → [src/styles/global.css](src/styles/global.css).
-- Logo `public/logo-pano.svg` (el que usa la app en el header) y `favicon.ico`.
+- Logo `public/logo-pano.svg` (el que usa la app en el header).
+- Favicon propio de la landing (la app usa el de Next.js por defecto): `public/favicon.svg` (sol y montaña del logo sobre crema), y desde ese salen `favicon.ico` (16/32/48) y `apple-touch-icon.png` (180, sin esquinas redondeadas).
 
 ## Convenciones
 
