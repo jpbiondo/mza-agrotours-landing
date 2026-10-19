@@ -35,7 +35,7 @@ La app completa (Next.js + Firebase + backend Spring) vive en el repo hermano `.
 Se buscan por nombre de archivo (sin extensión), en png/jpg/webp. Si falta, se muestra un placeholder:
 
 - `src/assets/fotos/hero.*`: foto del hero (cosecha de uva, hora dorada). Las fotos `modulo-*.*` se muestran bajo cada módulo solo si existen.
-- `src/assets/capturas/*.*`: capturas a 1280px de ancho de las pantallas del prototipo (`explorar-actividades`, `solicitar-reserva`, `pagar-reserva`, `detalle-de-reserva`, `crear-actividad`, `cobros`, `calendario-de-actividad`, `crop-information`, `chats`, `panel-del-sistema`). Reemplazan a los iframes del diseño.
+- `src/assets/capturas/*.*`: capturas a 1280px de ancho de las pantallas del prototipo (`explorar-actividades`, `solicitar-reserva`, `pagar-reserva`, `detalle-de-reserva`, `crear-actividad-productor`, `calendario-actividad-productor`, `cobro-productor`, `chats-productor`, `calendario-de-actividad`, `crop-information`, `chats`, `panel-del-sistema`). Reemplazan a los iframes del diseño.
 - Equipo: la foto es el avatar de GitHub de cada uno (`github.com/<usuario>.png`), cargado en vivo; el usuario está en `equipo` de data/landing.ts.
 
 ## Estética compartida con la app
