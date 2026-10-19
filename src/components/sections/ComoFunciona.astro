@@ -29,46 +29,60 @@ const pasos = await Promise.all(
       intro={{ es: "El recorrido del visitante, pantalla por pantalla.", en: "The visitor’s journey, screen by screen." }}
     />
 
-    <ol class="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 desk:grid-cols-4">
+    <!-- En mobile (una columna) es una línea de tiempo: número y línea a la izquierda,
+         y el título arriba de su captura, así queda claro qué imagen es de qué paso.
+         Desde sm vuelve a la grilla con captura, "Paso N", título y texto. -->
+    <ol class="mt-12 grid gap-x-6 sm:grid-cols-2 sm:gap-y-10 desk:grid-cols-4">
       {
         pasos.map(({ titulo, desc, pantalla, captura, grande }, i) => (
-          <li class="reveal flex min-w-0 flex-col gap-3.5">
-            {grande ? (
-              <button
-                type="button"
-                class="group relative block cursor-zoom-in rounded-lg text-left transition-transform duration-200 ease-brand hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
-                data-ampliar={grande.src}
-                data-ampliar-ancho={grande.attributes.width}
-                data-ampliar-alto={grande.attributes.height}
-                data-ampliar-es={pantalla.es}
-                data-ampliar-en={pantalla.en}
-              >
-                <BrowserFrame
-                  label={pantalla}
-                  shot={captura}
-                  viewport="aspect-[16/11]"
-                  class="transition-shadow duration-200 group-hover:shadow-[0_14px_36px_rgba(45,90,39,.2)]"
-                />
-                <span
-                  class="absolute bottom-3 right-3 grid size-9 place-items-center rounded-full bg-green-900/80 text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
-                  aria-hidden="true"
-                >
-                  <Maximize2 size={16} stroke-width={2} />
-                </span>
-                <T t={{ es: `Ampliar captura: ${pantalla.es}`, en: `Enlarge screenshot: ${pantalla.en}` }} class="sr-only" />
-              </button>
-            ) : (
-              <BrowserFrame label={pantalla} shot={captura} viewport="aspect-[16/11]" />
-            )}
-            <span class="mt-1 font-mono text-[13px] font-medium uppercase tracking-[.06em] text-warning-fg">
-              <T t={{ es: `Paso ${i + 1}`, en: `Step ${i + 1}` }} />
+          <li class="reveal relative grid min-w-0 grid-cols-[34px_minmax(0,1fr)] gap-x-4 pb-10 last:pb-0 sm:block sm:pb-0">
+            <span
+              class="grid size-8.5 place-items-center rounded-full bg-green-800 font-mono text-sm font-semibold text-white sm:hidden"
+              aria-hidden="true"
+            >
+              {i + 1}
             </span>
-            <h3 class="text-[19px] font-semibold">
-              <T t={titulo} />
-            </h3>
-            <p class="text-[14.5px] leading-normal text-fg-2">
-              <T t={desc} />
-            </p>
+            {i < pasos.length - 1 && <span class="absolute bottom-0 left-4 top-8.5 w-0.5 bg-green-800/25 sm:hidden" aria-hidden="true" />}
+            <div class="flex min-w-0 flex-col gap-3.5">
+              <div class="order-2 sm:order-1">
+                {grande ? (
+                  <button
+                    type="button"
+                    class="group relative block cursor-zoom-in rounded-lg text-left transition-transform duration-200 ease-brand hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                    data-ampliar={grande.src}
+                    data-ampliar-ancho={grande.attributes.width}
+                    data-ampliar-alto={grande.attributes.height}
+                    data-ampliar-es={pantalla.es}
+                    data-ampliar-en={pantalla.en}
+                  >
+                    <BrowserFrame
+                      label={pantalla}
+                      shot={captura}
+                      viewport="aspect-[16/11]"
+                      class="transition-shadow duration-200 group-hover:shadow-[0_14px_36px_rgba(45,90,39,.2)]"
+                    />
+                    <span
+                      class="absolute bottom-3 right-3 grid size-9 place-items-center rounded-full bg-green-900/80 text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+                      aria-hidden="true"
+                    >
+                      <Maximize2 size={16} stroke-width={2} />
+                    </span>
+                    <T t={{ es: `Ampliar captura: ${pantalla.es}`, en: `Enlarge screenshot: ${pantalla.en}` }} class="sr-only" />
+                  </button>
+                ) : (
+                  <BrowserFrame label={pantalla} shot={captura} viewport="aspect-[16/11]" />
+                )}
+              </div>
+              <span class="mt-1 hidden font-mono text-[13px] font-medium uppercase tracking-[.06em] text-warning-fg sm:order-2 sm:block">
+                <T t={{ es: `Paso ${i + 1}`, en: `Step ${i + 1}` }} />
+              </span>
+              <h3 class="order-1 pt-1 text-[19px] font-semibold sm:order-3 sm:pt-0">
+                <T t={titulo} />
+              </h3>
+              <p class="order-3 text-[14.5px] leading-normal text-fg-2 sm:order-4">
+                <T t={desc} />
+              </p>
+            </div>
           </li>
         ))
       }
